@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private menuController: MenuController) {}
+
+  closeMenu() {
+    this.menuController.close();
+  }
 }

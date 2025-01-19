@@ -1,3 +1,23 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="app">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Меню</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <app-menu (navigationEnd)="closeMenu()"></app-menu>
+    </ion-content>
+  </ion-menu>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Repeat</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="app">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
 </ion-app>

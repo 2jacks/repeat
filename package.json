@@ -1,7 +1,7 @@
 {
-  "name": "repeat_2",
+  "name": "repeat",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Nozdrin AA",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -28,6 +28,7 @@
     "@capacitor/status-bar": "6.0.2",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.0.0",
+    "lokijs": "^1.5.12",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -45,6 +46,7 @@
     "@capacitor/cli": "6.2.0",
     "@ionic/angular-toolkit": "^12.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/lokijs": "^1.5.14",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.16.0",
