@@ -7,11 +7,11 @@ import { AppSettingsPageComponent } from './modules/app-settings/components/app-
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/main',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
   {
-    path: 'main',
+    path: 'home',
     component: HomePageComponent,
     // loadChildren: () =>
     //   import('./modules/home/home.module').then((m) => m.MainModule),
@@ -34,9 +34,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
