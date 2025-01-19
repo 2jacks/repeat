@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { AppSettingsService } from './services/app-settings.service';
+
 import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { routes } from './app-settings.routes';
-import { IonicModule } from '@ionic/angular';
+import { AppSettingsRoutingModule } from './app-settings-routing.module';
+
+import { AppSettingsService } from './services/app-settings.service';
 import { AppSettingsPageComponent } from './components/app-settings-page/app-settings.page.component';
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forChild(routes), IonicModule],
+  imports: [SharedModule, AppSettingsRoutingModule],
   declarations: [AppSettingsPageComponent],
   exports: [AppSettingsPageComponent],
   providers: [AppSettingsService],

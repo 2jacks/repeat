@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
+
+import { SharedModule } from '../shared/shared.module';
+import { MuscleGroupsRoutingModule } from './muscle-groups-routing.module';
+
 import { MuscleGroupsPageComponent } from './components/muscle-groups-page/muscle-groups.page.component';
 import { MuscleGroupsService } from './services/muscle-groups.service';
-import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { routes } from './muscle-groups.routes';
-import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forChild(routes), IonicModule],
+  imports: [SharedModule, MuscleGroupsRoutingModule],
   declarations: [MuscleGroupsPageComponent],
   exports: [MuscleGroupsPageComponent],
   providers: [MuscleGroupsService],
-  bootstrap: [MuscleGroupsPageComponent],
 })
 export class MuscleGroupsModule {}

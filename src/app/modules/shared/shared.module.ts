@@ -3,11 +3,12 @@ import { Environment, CEnvironment } from 'src/app/environment';
 
 import { CommonModule } from '@angular/common';
 import { DatabaseService } from './services/database.service';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, IonicModule],
   declarations: [],
-  exports: [],
+  exports: [CommonModule, IonicModule],
   providers: [
     DatabaseService,
     {
