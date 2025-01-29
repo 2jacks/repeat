@@ -9,7 +9,9 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MuscleGroupsModule } from './modules/muscle-groups/muscle-groups.module';
 import { AppSettingsModule } from './modules/app-settings/app-settings.module';
-import { MainModule } from './modules/home/home.module';
+import { HomeModule } from './modules/home/home.module';
+import { ExercisesModule } from './modules/exercises/exercises.module';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -19,11 +21,15 @@ import { MainModule } from './modules/home/home.module';
     IonicModule.forRoot(),
     AppRoutingModule,
 
-    MainModule,
+    HomeModule,
     AppSettingsModule,
+    ExercisesModule,
     MuscleGroupsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    DatabaseService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

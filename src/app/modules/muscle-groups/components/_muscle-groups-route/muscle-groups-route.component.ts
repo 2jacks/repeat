@@ -3,10 +3,10 @@ import { MuscleGroupsService } from '../../services/muscle-groups.service';
 
 @Component({
   selector: 'app-muscle-groups-page',
-  styleUrl: './muscle-groups.page.component.css',
-  templateUrl: './muscle-groups.page.component.html',
+  styleUrl: './muscle-groups-route.component.css',
+  templateUrl: './muscle-groups-route.component.html',
   standalone: false,
 })
-export class MuscleGroupsPageComponent {
+export class MuscleGroupsRouteComponent {
   constructor(private _apiService: MuscleGroupsService) {}
 }

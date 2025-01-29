@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as Loki from 'lokijs';
 import { Environment } from 'src/app/environment';
-import { INITIAL_COLLECTIONS_DATA } from '../../../assets/initial-collections-data';
-import { Signal } from '../../../utils/decorators/Signal';
+import { INITIAL_COLLECTIONS_DATA } from '../assets/initial-collections-data';
+import { Signal } from '../utils/decorators/Signal';
 
 type TPersistenceMethod = 'localStorage' | 'fs' | 'memory' | null | undefined;
 

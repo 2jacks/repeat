@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './modules/home/components/home-page/home.page.component';
-import { MuscleGroupsPageComponent } from './modules/muscle-groups/components/muscle-groups-page/muscle-groups.page.component';
-import { AppSettingsPageComponent } from './modules/app-settings/components/app-settings-page/app-settings.page.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -12,25 +9,33 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomePageComponent,
-    // loadChildren: () =>
-    //   import('./modules/home/home.module').then((m) => m.MainModule),
+    // component: HomeRouteComponent,
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'exercises',
+    // component: ExercisesRouteComponent,
+    loadChildren: () =>
+      import('./modules/exercises/exercises.module').then(
+        (m) => m.ExercisesModule
+      ),
   },
   {
     path: 'muscle_groups',
-    component: MuscleGroupsPageComponent,
-    // loadChildren: () =>
-    //   import('./modules/muscle-groups/muscle-groups.module').then(
-    //     (m) => m.MuscleGroupsModule
-    //   ),
+    // component: MuscleGroupsRouteComponent,
+    loadChildren: () =>
+      import('./modules/muscle-groups/muscle-groups.module').then(
+        (m) => m.MuscleGroupsModule
+      ),
   },
   {
     path: 'app_settings',
-    component: AppSettingsPageComponent,
-    // loadChildren: () =>
-    //   import('./modules/app-settings/app-settings.module').then(
-    //     (m) => m.AppSettingsModule
-    //   ),
+    // component: AppSettingsRouteComponent,
+    loadChildren: () =>
+      import('./modules/app-settings/app-settings.module').then(
+        (m) => m.AppSettingsModule
+      ),
   },
 ];
 @NgModule({

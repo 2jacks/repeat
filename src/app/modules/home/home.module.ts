@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 
-import { HomePageComponent } from './components/home-page/home.page.component';
+import { HomeRouteComponent } from './components/_home-route/home-route.component';
 
 @NgModule({
   imports: [SharedModule, HomeRoutingModule],
-  declarations: [HomePageComponent],
-  exports: [HomePageComponent],
+  declarations: [HomeRouteComponent],
+  exports: [HomeRouteComponent],
   providers: [],
 })
-export class MainModule {}
+export class HomeModule {}

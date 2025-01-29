@@ -1,0 +1,20 @@
+<ul>
+  <li *ngFor="let exercise of exercises()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="muscleGroupsList">
+            <ng-container *ngFor="let muscle_group of exercise.muscle_groups">
+              <app-muscle-group-icon [group]="$any(muscle_group.id)"
+            /></ng-container>
+          </div>
+        </ion-card-subtitle>
+        <ion-card-title>{{ exercise.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ exercise.description }}
+      </ion-card-content>
+    </ion-card>
+  </li>
+</ul>

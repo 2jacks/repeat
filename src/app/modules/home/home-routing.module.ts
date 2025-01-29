@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './components/home-page/home.page.component';
+import { HomeRouteComponent } from './components/_home-route/home-route.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent }, // Маршрут по умолчанию для HomeModule
+  { path: '', component: HomeRouteComponent }, // Маршрут по умолчанию для HomeModule
 ];
 
 @NgModule({

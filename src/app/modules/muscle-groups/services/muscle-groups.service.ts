@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService } from '../../shared/services/database.service';
-import { BaseService } from '../../shared/services/base-service.service';
+import { DatabaseService } from '../../../services/database.service';
+import { BaseApiService } from '../../shared/services/base-api-service.service';
+import { IMuscleGroup } from '../models/MuscleGroup';
 
 @Injectable()
-export class MuscleGroupsService extends BaseService {
+export class MuscleGroupsService extends BaseApiService<IMuscleGroup> {
   constructor(protected override _dbService: DatabaseService) {
     super(_dbService);
     this._collectionName = 'muscle_groups';

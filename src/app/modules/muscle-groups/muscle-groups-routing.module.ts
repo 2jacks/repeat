@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MuscleGroupsPageComponent } from './components/muscle-groups-page/muscle-groups.page.component';
+import { MuscleGroupsRouteComponent } from './components/_muscle-groups-route/muscle-groups-route.component';
 
 const routes: Routes = [
-  { path: '', component: MuscleGroupsPageComponent }, // Маршрут по умолчанию для HomeModule
+  { path: '', component: MuscleGroupsRouteComponent }, // Маршрут по умолчанию для HomeModule
 ];
 
 @NgModule({

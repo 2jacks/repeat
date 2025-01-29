@@ -9,12 +9,12 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class MenuComponent {
   menuItems = [
-    { title: 'Главная', path: '/home', icon: 'home-outline' },
     {
-      title: 'Мышечные группы',
-      path: '/muscle_groups',
-      icon: 'accessibility-outline',
+      title: 'Главная',
+      path: '/home',
+      icon: 'home-outline',
     },
+    { title: 'Упражнения', path: '/exercises', icon: 'accessibility-outline' },
     { title: 'Настройки', path: '/app_settings', icon: 'settings-outline' },
   ];
 

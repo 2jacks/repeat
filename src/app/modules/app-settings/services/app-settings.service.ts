@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService } from '../../shared/services/database.service';
-import { BaseService } from '../../shared/services/base-service.service';
+import { DatabaseService } from '../../../services/database.service';
+import { BaseApiService } from '../../shared/services/base-api-service.service';
 
 export type TAppSettingKey = string;
 export type TAppSettingValue = any;
@@ -10,7 +10,7 @@ export interface IAppSettingRecord {
 }
 
 @Injectable()
-export class AppSettingsService extends BaseService {
+export class AppSettingsService extends BaseApiService {
   private _appSettings: IAppSettingRecord[] = [];
 
   constructor(protected override _dbService: DatabaseService) {

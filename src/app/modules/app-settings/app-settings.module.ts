@@ -4,12 +4,12 @@ import { SharedModule } from '../shared/shared.module';
 import { AppSettingsRoutingModule } from './app-settings-routing.module';
 
 import { AppSettingsService } from './services/app-settings.service';
-import { AppSettingsPageComponent } from './components/app-settings-page/app-settings.page.component';
+import { AppSettingsRouteComponent } from './components/_app-settings-route/app-settings-route.component';
 
 @NgModule({
   imports: [SharedModule, AppSettingsRoutingModule],
-  declarations: [AppSettingsPageComponent],
-  exports: [AppSettingsPageComponent],
+  declarations: [AppSettingsRouteComponent],
+  exports: [AppSettingsRouteComponent],
   providers: [AppSettingsService],
 })
 export class AppSettingsModule {}

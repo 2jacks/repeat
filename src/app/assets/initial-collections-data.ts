@@ -19,26 +19,26 @@ export const INITIAL_COLLECTIONS_DATA: TInitialCollectionsData = {
     {
       id: 1,
       name: 'Жим лёжа',
-      muscle_group: 2,
+      muscle_groups: [2, 4, 6],
       description:
         'Базовое упражнение. Задействует грудные мыщцы, трицепс и передние дельты',
     },
     {
       id: 2,
       name: 'Становая тяга',
-      muscle_group: 1,
+      muscle_groups: [1],
       description: 'Базовое упражнение.',
     },
     {
       id: 3,
       name: 'Приседания со штангой',
-      muscle_group: 3,
+      muscle_groups: [3],
       description: 'Базовое упражнение.',
     },
     {
       id: 4,
       name: 'Подъем штанги на бицепс',
-      muscle_group: 5,
+      muscle_groups: [5],
       description: 'Базовое упражнение.',
     },
   ],

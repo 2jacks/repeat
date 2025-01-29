@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppSettingsPageComponent } from './components/app-settings-page/app-settings.page.component';
+import { AppSettingsRouteComponent } from './components/_app-settings-route/app-settings-route.component';
 
 const routes: Routes = [
-  { path: '', component: AppSettingsPageComponent }, // Маршрут по умолчанию для HomeModule
+  { path: '', component: AppSettingsRouteComponent }, // Маршрут по умолчанию для HomeModule
 ];
 
 @NgModule({
