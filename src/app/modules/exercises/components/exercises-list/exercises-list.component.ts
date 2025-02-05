@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ExercisesService } from '../../services/exercises.service';
+import { ExercisesRegistryService } from '../../services/exercises-registry.service';
 import { IExercise } from '../../models/Exercise';
 
 @Component({
@@ -11,9 +11,9 @@ import { IExercise } from '../../models/Exercise';
 export class ExercisesListComponent implements OnInit {
   public exercises = signal<IExercise[]>([]);
 
-  constructor(private _apiService: ExercisesService) {}
+  constructor(private _registryService: ExercisesRegistryService) {}
 
   ngOnInit() {
-    this.exercises.set(this._apiService.getAll());
+    this.exercises.set(this._registryService.getAll());
   }
 }

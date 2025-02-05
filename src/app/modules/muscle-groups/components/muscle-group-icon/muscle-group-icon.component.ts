@@ -1,10 +1,7 @@
 import { Component, OnInit, Input, computed } from '@angular/core';
-import {
-  EMuscleGroupIdToName,
-  MUSCLE_GROUP_ID_TO_NAME,
-} from '../../e-muscle-group-name-to-id-icons';
+import { EMuscleGroupIdToName } from '../../e-muscle-group-name-to-id-icons';
 
-const DEFAULT_MUSCLE_GROUP = 'biceps';
+const DEFAULT_MUSCLE_GROUP = 1;
 
 @Component({
   selector: 'app-muscle-group-icon',
@@ -15,20 +12,11 @@ const DEFAULT_MUSCLE_GROUP = 'biceps';
 export class MuscleGroupIconComponent implements OnInit {
   constructor() {}
 
-  @Input() group: keyof typeof EMuscleGroupIdToName | number =
-    DEFAULT_MUSCLE_GROUP;
+  @Input() group: number = DEFAULT_MUSCLE_GROUP;
   @Input() size?: number = 20;
 
   imgName = computed(() => {
-    let name = DEFAULT_MUSCLE_GROUP;
-
-    if (typeof this.group === 'string') {
-      name = this.group;
-    } else {
-      name = MUSCLE_GROUP_ID_TO_NAME.get(this.group) as string;
-    }
-
-    return name;
+    return EMuscleGroupIdToName[this.group];
   });
 
   imgContainerStyle = computed(() => ({

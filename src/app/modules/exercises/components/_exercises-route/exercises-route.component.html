@@ -1,8 +1,8 @@
 <ion-content class="ion-padding">
   <app-exercises-list />
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button>
-      <ion-icon name="add" id="open-modal-new-exercise"></ion-icon>
+    <ion-fab-button id="open-modal-new-exercise">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -11,18 +11,15 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="modal.dismiss()">Cancel</ion-button>
+            <ion-button (click)="modal.dismiss()">
+              <ion-icon name="backspace-outline"></ion-icon>
+            </ion-button>
           </ion-buttons>
-          <ion-title>Welcome</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="modal.dismiss()" [strong]="true"
-              >Confirm</ion-button
-            >
-          </ion-buttons>
+          <ion-title>Новое упражнение</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <app-new-exercise></app-new-exercise>
+        <app-create-edit-exercise-form></app-create-edit-exercise-form>
       </ion-content>
     </ng-template>
   </ion-modal>

@@ -1,0 +1,46 @@
+<ion-content class="ion-padding">
+  <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input
+        formControlName="name"
+        labelPlacement="floating"
+        label="Название"
+      ></ion-input>
+    </ion-item>
+
+    <!-- <ion-item>
+      <ion-label>Группы мышц</ion-label>
+      <ion-select multiple="true" formControlName="muscle_groups">
+        <ion-select-option value="грудь">Грудь</ion-select-option>
+        <ion-select-option value="спина">Спина</ion-select-option>
+        <ion-select-option value="ноги">Ноги</ion-select-option>
+        <ion-select-option value="бицепс">Бицепс</ion-select-option>
+        <ion-select-option value="трицепс">Трицепс</ion-select-option>
+        <ion-select-option value="плечи">Плечи</ion-select-option>
+        <ion-select-option value="пресс">Пресс</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-textarea
+        formControlName="description"
+        labelPlacement="floating"
+        label="Описание"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        type="url"
+        formControlName="mediaUrl"
+        label="Гифка или видео (опционально)"
+      ></ion-input>
+    </ion-item>
+
+    <div class="button-container">
+      <ion-button type="submit" expand="block" [disabled]="!exerciseForm.valid">
+        Создать
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

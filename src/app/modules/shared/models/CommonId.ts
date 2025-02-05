@@ -1,1 +1,1 @@
-export type TCommonId = number | string;
+export type TCommonId = number;
