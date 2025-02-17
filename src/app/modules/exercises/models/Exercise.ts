@@ -1,9 +1,8 @@
-import { IMuscleGroup } from '../../muscle-groups/models/MuscleGroup';
-import { TCommonId } from '../../shared/models/CommonId';
+import { ISimpleIdentity } from '../../shared/models/SimpleIdentity';
 
 export interface IExercise {
   id: number;
   name: string;
-  muscle_groups: TCommonId[];
+  muscle_groups: ISimpleIdentity[];
   description: string;
 }

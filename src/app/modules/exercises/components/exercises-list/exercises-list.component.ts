@@ -14,6 +14,9 @@ export class ExercisesListComponent implements OnInit {
   constructor(private _registryService: ExercisesRegistryService) {}
 
   ngOnInit() {
-    this.exercises.set(this._registryService.getAll());
+    this._registryService.getAll().then((data) => {
+      console.log('EXERCISES', data);
+      this.exercises.set(data);
+    });
   }
 }

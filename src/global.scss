@@ -37,3 +37,7 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 @import "./reset.scss";
+
+.plt-mobile .main-content {
+  --offset-bottom: -50px !important; // Грязный хак от перекрывающей панели навигации на устройстве
+}

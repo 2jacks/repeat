@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MuscleGroupsService } from '../../services/muscle-groups.service';
+import { MuscleGroupsRegistryService } from '../../services/muscle-groups-registry.service';
 
 @Component({
   selector: 'app-muscle-groups-page',
@@ -8,5 +8,5 @@ import { MuscleGroupsService } from '../../services/muscle-groups.service';
   standalone: false,
 })
 export class MuscleGroupsRouteComponent {
-  constructor(private _apiService: MuscleGroupsService) {}
+  constructor(private _apiService: MuscleGroupsRegistryService) {}
 }
