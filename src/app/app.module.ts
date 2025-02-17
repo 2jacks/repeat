@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { inject, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,6 +12,11 @@ import { AppSettingsModule } from './modules/app-settings/app-settings.module';
 import { HomeModule } from './modules/home/home.module';
 import { ExercisesModule } from './modules/exercises/exercises.module';
 import { DatabaseService } from './services/database.service';
+
+async function runDatabase(): Promise<void> {
+  const dbService = inject(DatabaseService);
+  return await dbService.initializeDatabase();
+}
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -27,6 +32,7 @@ import { DatabaseService } from './services/database.service';
     MuscleGroupsModule,
   ],
   providers: [
+    // provideAppInitializer(runDatabase),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     DatabaseService,
   ],

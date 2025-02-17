@@ -1,18 +1,18 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitialMuscleGroup1 implements MigrationInterface {
-  name = 'InitialMuscleGroup1';
+export class InitialMuscleGroup1739812301396 implements MigrationInterface {
+  name = 'InitialMuscleGroup1739812301396';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE IF NOT EXISTS muscle_groups (
+      `CREATE TABLE IF NOT EXISTS muscle_group (
             id INTEGER PRIMARY KEY AUTOINCREMENT, -- Первичный ключ
             name TEXT NOT NULL UNIQUE            -- Название группы мышц (уникальное)
         );
 			`
     );
     await queryRunner.query(
-      `INSERT OR IGNORE INTO muscle_groups (id, name) VALUES
+      `INSERT OR IGNORE INTO muscle_group (id, name) VALUES
         (1, 'Спина'),
         (2, 'Грудь'),
         (3, 'Ноги'),

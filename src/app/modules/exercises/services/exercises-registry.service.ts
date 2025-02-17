@@ -12,11 +12,9 @@ export class ExercisesRegistryService extends BaseRegistryService<IExercise> {
     private muscleGroupRegistryService: MuscleGroupsRegistryService
   ) {
     super(dbService);
-
-    this._collectionName = 'exercises';
   }
 
-  public override async getAll(): Promise<IExercise[]> {
+  public async getAll(): Promise<IExercise[]> {
     const query = `SELECT 
     e.id AS id,
     e.name AS name,
@@ -34,9 +32,11 @@ export class ExercisesRegistryService extends BaseRegistryService<IExercise> {
             e.id, e.name, e.description;
     `;
 
-    const res =
-      ((await this._dbService.getDatabaseConnection().query(query))
-        .values as any[]) ?? [];
+    // const res =
+    //   ((await this._dbService.getDatabaseConnection().query(query))
+    //     .values as any[]) ?? [];
+
+    const res: any[] = [];
 
     res.forEach((row) => {
       row.muscle_groups = JSON.parse(row.muscle_groups);
@@ -45,7 +45,7 @@ export class ExercisesRegistryService extends BaseRegistryService<IExercise> {
     return res;
   }
 
-  public override async create(newRecords: IExercise[]): Promise<void> {
+  public async create(newRecords: IExercise[]): Promise<void> {
     // Генерация SQL-запроса
     const placeholders = newRecords.map(() => '(?, ?)').join(', ');
     const values = newRecords.map((record) => [
@@ -53,13 +53,13 @@ export class ExercisesRegistryService extends BaseRegistryService<IExercise> {
       record.description,
     ]);
 
-    // Вставка данных
-    const res = await this.db.run(
-      `INSERT INTO exercises (name, description) VALUES ${placeholders}`,
-      values
-    );
+    // // Вставка данных
+    // const res = await this.db.run(
+    //   `INSERT INTO exercises (name, description) VALUES ${placeholders}`,
+    //   values
+    // );
 
-    console.log('INSERT EXER', res);
+    // console.log('INSERT EXER', res);
     return;
   }
 }

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DatabaseService } from './services/database.service';
-import { getRepository } from 'typeorm';
-import { dataSourceMuscleGroup } from './modules/muscle-groups/muscle-group.data-source';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +17,10 @@ export class AppComponent {
   public isDatabaseInitialized: boolean = false;
 
   ngOnInit() {
-    this.dbService.initializeDatabase().then(async () => {
-      console.log(dataSourceMuscleGroup);
+    this.dbService.initializeDatabase().then(() => {
+      setTimeout(() => {
+        this.isDatabaseInitialized = true;
+      }, 3000);
     });
   }
 

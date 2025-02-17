@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('muscle-group')
+@Entity('muscle_group')
 export class MuscleGroup {
   @PrimaryGeneratedColumn()
   id!: number;
