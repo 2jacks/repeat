@@ -26,7 +26,7 @@ export class CreateEditExerciseFormComponent {
   onSubmit() {
     if (this.exerciseForm.valid) {
       const exerciseData = this.exerciseForm.value;
-      this.registryService.create([exerciseData]);
+      // this.registryService.create([exerciseData]);
     }
   }
 }

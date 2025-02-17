@@ -5,11 +5,12 @@ import { Environment } from '../environment';
 
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-import { MuscleGroup } from '../modules/muscle-groups/entities/muscle-group';
+import { MuscleGroup } from '../modules/muscle-groups/entities/muscle-group.entity';
+import { Exercise } from '../modules/exercises/entities/exercise.entity';
 
 import * as MIGRATIONS from './migrations';
 
-const ENTITIES = [MuscleGroup];
+const ENTITIES = [Exercise, MuscleGroup];
 
 @Injectable()
 export class DatabaseService {
@@ -65,7 +66,7 @@ export class DatabaseService {
       migrations: MIGRATIONS, //["../migrations/author/*{.ts,.js}"]
       subscribers: [],
       logging: [/*'query',*/ 'error', 'schema'],
-      synchronize: true, // !!!You will lose all data in database if set to `true`
+      synchronize: false, // !!!You will lose all data in database if set to `true`
       migrationsRun: false, // Required with capacitor type
     };
 
