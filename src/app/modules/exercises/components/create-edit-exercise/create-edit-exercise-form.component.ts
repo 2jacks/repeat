@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExercisesRegistryService } from '../../services/exercises-registry.service';
+import { ToastController } from '@ionic/angular';
+import { MuscleGroup } from 'src/app/modules/muscle-groups/entities/muscle-group.entity';
+import { MuscleGroupsRegistryService } from 'src/app/modules/muscle-groups/services/muscle-groups-registry.service';
 
 @Component({
   selector: 'app-create-edit-exercise-form',
@@ -9,24 +12,52 @@ import { ExercisesRegistryService } from '../../services/exercises-registry.serv
   standalone: false,
 })
 export class CreateEditExerciseFormComponent {
-  exerciseForm: FormGroup;
+  public exerciseForm: FormGroup;
+  public muscleGroups: MuscleGroup[] = [];
+
+  @Output() afterSubmit = new EventEmitter<void>();
 
   constructor(
     private formBuilder: FormBuilder,
-    private registryService: ExercisesRegistryService
+    private exercisesRegistryService: ExercisesRegistryService,
+    private muscleGroupsRegistryService: MuscleGroupsRegistryService,
+    private toastController: ToastController
   ) {
     this.exerciseForm = this.formBuilder.group({
       name: ['', Validators.required],
-      muscle_groups: [[]],
+      muscleGroups: [[]],
       description: [''],
       mediaUrl: [''],
     });
   }
 
-  onSubmit() {
+  public ngOnInit() {
+    this.muscleGroupsRegistryService.getAll().then((res) => {
+      this.muscleGroups = res;
+    });
+  }
+
+  async onSubmit() {
     if (this.exerciseForm.valid) {
       const exerciseData = this.exerciseForm.value;
-      // this.registryService.create([exerciseData]);
+      this.exercisesRegistryService
+        .create(exerciseData)
+        .then((res) => {
+          console.log('CREATE-EDIT-FORM', res);
+          this.toastController
+            .create({
+              message: 'Новое упражнение добавлено!',
+              duration: 3000,
+              position: 'top',
+            })
+            .then((toast) => toast.present());
+          this.exercisesRegistryService.getAll().then((res) => {
+            console.log(res);
+          });
+        })
+        .finally(() => {
+          this.afterSubmit.emit();
+        });
     }
   }
 }

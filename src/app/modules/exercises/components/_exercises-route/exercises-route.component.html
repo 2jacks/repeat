@@ -19,7 +19,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <app-create-edit-exercise-form></app-create-edit-exercise-form>
+        <app-create-edit-exercise-form
+          (afterSubmit)="modal.dismiss()"
+        ></app-create-edit-exercise-form>
       </ion-content>
     </ng-template>
   </ion-modal>

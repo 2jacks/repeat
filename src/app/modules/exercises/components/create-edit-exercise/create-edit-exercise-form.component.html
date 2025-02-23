@@ -8,18 +8,16 @@
       ></ion-input>
     </ion-item>
 
-    <!-- <ion-item>
+    <ion-item>
       <ion-label>Группы мышц</ion-label>
-      <ion-select multiple="true" formControlName="muscle_groups">
-        <ion-select-option value="грудь">Грудь</ion-select-option>
-        <ion-select-option value="спина">Спина</ion-select-option>
-        <ion-select-option value="ноги">Ноги</ion-select-option>
-        <ion-select-option value="бицепс">Бицепс</ion-select-option>
-        <ion-select-option value="трицепс">Трицепс</ion-select-option>
-        <ion-select-option value="плечи">Плечи</ion-select-option>
-        <ion-select-option value="пресс">Пресс</ion-select-option>
+      <ion-select multiple="true" formControlName="muscleGroups">
+        <ng-container *ngFor="let muscleGroup of muscleGroups">
+          <ion-select-option value="{{ muscleGroup.id }}">{{
+            muscleGroup.name
+          }}</ion-select-option>
+        </ng-container>
       </ion-select>
-    </ion-item> -->
+    </ion-item>
 
     <ion-item>
       <ion-textarea

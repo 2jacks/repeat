@@ -14,6 +14,7 @@ export class MuscleGroupIconComponent implements OnInit {
 
   @Input() group: number = DEFAULT_MUSCLE_GROUP;
   @Input() size?: number = 20;
+  @Input() color?: string = '#708090';
 
   imgName = computed(() => {
     return EMuscleGroupIdToName[this.group];

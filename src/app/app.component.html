@@ -19,8 +19,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content id="app" class="main-content">
-      <ion-router-outlet></ion-router-outlet>
+      <div class="main-content__wrapper">
+        <ion-router-outlet></ion-router-outlet>
+      </div>
     </ion-content>
   </ion-app>
 </div>
-<div *ngIf="!isDatabaseInitialized">Подключение БД</div>
+<div *ngIf="!isDatabaseInitialized" class="full-size-center-block">
+  <ion-spinner color="primary"></ion-spinner>
+</div>

@@ -15,16 +15,16 @@ const ENTITIES = [Exercise, MuscleGroup];
 @Injectable()
 export class DatabaseService {
   public dataSource!: DataSource;
-  private _sqliteConnection!: SQLiteConnection;
-  private _platform!: string;
+  public sqliteConnection!: SQLiteConnection;
+  public platform!: string;
 
   constructor(private env: Environment) {}
 
   public async initializeDatabase(): Promise<void> {
-    this._sqliteConnection = new SQLiteConnection(CapacitorSQLite);
-    this._platform = Capacitor.getPlatform();
+    this.sqliteConnection = new SQLiteConnection(CapacitorSQLite);
+    this.platform = Capacitor.getPlatform();
 
-    if (this._platform !== 'web') {
+    if (this.platform !== 'web') {
       await this._initializeDataSource();
     } else {
       window.addEventListener('DOMContentLoaded', async () => {
@@ -33,7 +33,7 @@ export class DatabaseService {
         customElements
           .whenDefined('jeep-sqlite')
           .then(async () => {
-            await this._sqliteConnection.initWebStore();
+            await this.sqliteConnection.initWebStore();
             await this._initializeDataSource();
           })
           .catch((err) => {
@@ -50,7 +50,7 @@ export class DatabaseService {
 
   private async _initializeDataSource() {
     //check sqlite connections consistency
-    await this._sqliteConnection
+    await this.sqliteConnection
       .checkConnectionsConsistency()
       .catch((e: Error) => {
         console.log(e);
@@ -59,7 +59,7 @@ export class DatabaseService {
     const dataSourceConfig: DataSourceOptions = {
       name: 'muscleGroupConnection',
       type: 'capacitor',
-      driver: this._sqliteConnection,
+      driver: this.sqliteConnection,
       database: this.env.DATABASE_NAME,
       mode: 'no-encryption',
       entities: ENTITIES,
@@ -76,8 +76,8 @@ export class DatabaseService {
     if (this.dataSource.isInitialized) {
       await this.dataSource.runMigrations();
     }
-    if (this._platform === 'web') {
-      await this._sqliteConnection.saveToStore(this.env.DATABASE_NAME);
+    if (this.platform === 'web') {
+      await this.sqliteConnection.saveToStore(this.env.DATABASE_NAME);
     }
   }
 }
