@@ -9,8 +9,14 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Группы мышц</ion-label>
-      <ion-select multiple="true" formControlName="muscleGroups">
+      <ion-select
+        multiple="true"
+        formControlName="muscleGroups"
+        [cancelText]="i18n.CANCEL"
+        labelPlacement="stacked"
+        label="Мышечные группы"
+        placeholder="Мышечные группы"
+      >
         <ng-container *ngFor="let muscleGroup of muscleGroups">
           <ion-select-option value="{{ muscleGroup.id }}">{{
             muscleGroup.name
@@ -25,14 +31,6 @@
         labelPlacement="floating"
         label="Описание"
       ></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-input
-        type="url"
-        formControlName="mediaUrl"
-        label="Гифка или видео (опционально)"
-      ></ion-input>
     </ion-item>
 
     <div class="button-container">

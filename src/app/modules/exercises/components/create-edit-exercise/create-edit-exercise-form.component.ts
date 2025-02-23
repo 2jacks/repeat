@@ -4,6 +4,7 @@ import { ExercisesRegistryService } from '../../services/exercises-registry.serv
 import { ToastController } from '@ionic/angular';
 import { MuscleGroup } from 'src/app/modules/muscle-groups/entities/muscle-group.entity';
 import { MuscleGroupsRegistryService } from 'src/app/modules/muscle-groups/services/muscle-groups-registry.service';
+import { I18N } from 'src/app/modules/shared/constants/i18n';
 
 @Component({
   selector: 'app-create-edit-exercise-form',
@@ -18,6 +19,7 @@ export class CreateEditExerciseFormComponent {
   @Output() afterSubmit = new EventEmitter<void>();
 
   constructor(
+    public i18n: I18N,
     private formBuilder: FormBuilder,
     private exercisesRegistryService: ExercisesRegistryService,
     private muscleGroupsRegistryService: MuscleGroupsRegistryService,

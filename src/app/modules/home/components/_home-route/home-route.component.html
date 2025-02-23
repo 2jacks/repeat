@@ -1,15 +1,17 @@
-<ion-content class="ion-padding">Главная страница</ion-content>
+<ion-content class="ion-padding">
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>
 
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="muscle_groups" href="/muscle_groups">
+    <ion-tab-button tab="training">
       <ion-icon aria-hidden="true" name="triangle"></ion-icon>
-      <ion-label>Мышечные группы</ion-label>
+      <ion-label>Тренировки</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="app_settings" href="/app_settings">
+    <ion-tab-button tab="food">
       <ion-icon aria-hidden="true" name="square"></ion-icon>
-      <ion-label>Приложение</ion-label>
+      <ion-label>Питание</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

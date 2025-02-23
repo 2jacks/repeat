@@ -1,6 +1,6 @@
 import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
 import { TuiRoot } from "@taiga-ui/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { inject, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -16,11 +16,6 @@ import { HomeModule } from './modules/home/home.module';
 import { ExercisesModule } from './modules/exercises/exercises.module';
 import { DatabaseService } from './services/database.service';
 
-async function runDatabase(): Promise<void> {
-  const dbService = inject(DatabaseService);
-  return await dbService.initializeDatabase();
-}
-
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   exports: [AppComponent, MenuComponent],
@@ -33,11 +28,10 @@ async function runDatabase(): Promise<void> {
     AppSettingsModule,
     ExercisesModule,
     MuscleGroupsModule,
-      BrowserAnimationsModule,
+    BrowserAnimationsModule,
       TuiRoot
 ],
   providers: [
-    // provideAppInitializer(runDatabase),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     DatabaseService,
       NG_EVENT_PLUGINS

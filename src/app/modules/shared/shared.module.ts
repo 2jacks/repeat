@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
+import { CI18N, I18N } from './constants/i18n';
+
 @NgModule({
   imports: [CommonModule, IonicModule, ReactiveFormsModule],
   declarations: [],
@@ -13,6 +15,10 @@ import { IonicModule } from '@ionic/angular';
     {
       provide: Environment,
       useValue: CEnvironment,
+    },
+    {
+      provide: I18N,
+      useValue: CI18N,
     },
   ],
 })
