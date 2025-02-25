@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DatabaseService } from './services/database.service';
+import { Router } from '@angular/router';
 
 interface ITabItem {
   label: string;
@@ -33,10 +34,12 @@ export class AppComponent {
       path: 'food',
     },
   ];
+  public activeItemIndex: number = 1;
 
   constructor(
     private dbService: DatabaseService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -45,6 +48,10 @@ export class AppComponent {
         this.isDatabaseInitialized = true;
       }, 3000);
     });
+  }
+
+  public onTabClick(tab: ITabItem) {
+    this.router.navigate([tab.path]);
   }
 
   closeMenu() {

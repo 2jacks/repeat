@@ -1,42 +1,42 @@
-<ion-content class="ion-padding">
-  <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-input
-        formControlName="name"
-        labelPlacement="floating"
-        label="Название"
-      ></ion-input>
-    </ion-item>
+<form tuiForm="l" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+  <header tuiHeader>
+    <h3 tuiTitle>Новое упражнение</h3>
+  </header>
 
-    <ion-item>
-      <ion-select
-        multiple="true"
-        formControlName="muscleGroups"
-        [cancelText]="i18n.CANCEL"
-        labelPlacement="stacked"
-        label="Мышечные группы"
-        placeholder="Мышечные группы"
-      >
-        <ng-container *ngFor="let muscleGroup of muscleGroups">
-          <ion-select-option value="{{ muscleGroup.id }}">{{
-            muscleGroup.name
-          }}</ion-select-option>
-        </ng-container>
-      </ion-select>
-    </ion-item>
+  <tui-textfield>
+    <label tuiLabel>Название</label>
+    <input
+      formControlName="name"
+      placeholder="Введите название упражнения"
+      tuiTextfield
+    />
+  </tui-textfield>
 
-    <ion-item>
-      <ion-textarea
-        formControlName="description"
-        labelPlacement="floating"
-        label="Описание"
-      ></ion-textarea>
-    </ion-item>
+  <tui-multi-select
+    formControlName="muscleGroups"
+    [stringify]="stringifyMuscleGroup"
+    [tuiTextfieldLabelOutside]="true"
+  >
+    Выберите мышечные группы
+    <tui-data-list-wrapper
+      *tuiDataList
+      tuiMultiSelectGroup
+      [items]="muscleGroups"
+      [itemContent]="stringifyMuscleGroup | tuiStringifyContent"
+    />
+  </tui-multi-select>
 
-    <div class="button-container">
-      <ion-button type="submit" expand="block" [disabled]="!exerciseForm.valid">
-        Создать
-      </ion-button>
-    </div>
-  </form>
-</ion-content>
+  <tui-textfield>
+    <label tuiLabel>Описание</label>
+    <input
+      formControlName="description"
+      placeholder="Опишите упражнение"
+      tuiTextfield
+    />
+  </tui-textfield>
+
+  <footer>
+    <button tuiButton type="submit">Создать</button>
+    <button appearance="flat" tuiButton type="button">Отмена</button>
+  </footer>
+</form>

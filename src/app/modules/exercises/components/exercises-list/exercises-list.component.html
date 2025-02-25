@@ -1,20 +1,19 @@
-<ul>
+<ul class="root">
   <li *ngFor="let exercise of exercises()">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>
-          <div class="muscleGroupsList">
-            <ng-container *ngFor="let muscle_group of exercise.muscleGroups">
-              <app-muscle-group-icon [group]="muscle_group.id"
-            /></ng-container>
-          </div>
-        </ion-card-subtitle>
-        <ion-card-title>{{ exercise.name }}</ion-card-title>
-      </ion-card-header>
+    <div tuiAppearance="floating" tuiCardLarge class="tui-space_top-4">
+      <header tuiHeader>
+        <h2 tuiTitle>{{ exercise.name }}</h2>
+        <aside tuiAccessories>
+          <tui-badge appearance="neutral" size="l">
+            <app-muscle-group-icon
+              *ngFor="let muscle_group of exercise.muscleGroups"
+              [group]="muscle_group.id"
+            />
+          </tui-badge>
+        </aside>
+      </header>
 
-      <ion-card-content>
-        {{ exercise.description }}
-      </ion-card-content>
-    </ion-card>
+      <section>{{ exercise.description }}</section>
+    </div>
   </li>
 </ul>

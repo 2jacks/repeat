@@ -15,6 +15,7 @@ import { I18N } from 'src/app/modules/shared/constants/i18n';
 export class CreateEditExerciseFormComponent {
   public exerciseForm: FormGroup;
   public muscleGroups: MuscleGroup[] = [];
+  public muscleGroupsNames: string[] = [];
 
   @Output() afterSubmit = new EventEmitter<void>();
 
@@ -39,13 +40,12 @@ export class CreateEditExerciseFormComponent {
     });
   }
 
-  async onSubmit() {
+  public async onSubmit() {
     if (this.exerciseForm.valid) {
       const exerciseData = this.exerciseForm.value;
       this.exercisesRegistryService
         .create(exerciseData)
         .then((res) => {
-          console.log('CREATE-EDIT-FORM', res);
           this.toastController
             .create({
               message: 'Новое упражнение добавлено!',
@@ -61,5 +61,9 @@ export class CreateEditExerciseFormComponent {
           this.afterSubmit.emit();
         });
     }
+  }
+
+  public stringifyMuscleGroup(muscleGroup: MuscleGroup): string {
+    return muscleGroup.name;
   }
 }
