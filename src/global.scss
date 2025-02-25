@@ -39,7 +39,7 @@
 @import "./reset.scss";
 @import "./app/styles/common.scss";
 
-.plt-mobile ion-content > * {
-  padding-bottom: 50px;
-  // --offset-bottom: -50px !important; // Грязный хак от перекрывающей панели навигации на устройстве
-}
+// .plt-mobile ion-content > * {
+//   padding-bottom: 50px;
+//   // --offset-bottom: -50px !important; // Грязный хак от перекрывающей панели навигации на устройстве
+// }
