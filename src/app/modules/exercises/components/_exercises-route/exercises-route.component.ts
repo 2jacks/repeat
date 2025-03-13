@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { tuiDialog, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 
-import { CreateEditExerciseFormComponent } from '../create-edit-exercise/create-edit-exercise-form.component';
+import { CreateEditExerciseFormComponent } from '../create-edit-exercise-form/create-edit-exercise-form.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-exercises-route',
@@ -14,19 +15,14 @@ import { CreateEditExerciseFormComponent } from '../create-edit-exercise/create-
 export class ExercisesRouteComponent {
   constructor(private router: Router, private dialogs: TuiDialogService) {}
 
-  private readonly createExerciseFormDialog = tuiDialog(
-    CreateEditExerciseFormComponent,
-    {
-      size: 'page',
-      closeable: true,
-      dismissible: true,
-    }
-  );
-
   public openCreateExerciseDialog(content: PolymorpheusContent) {
-    this.dialogs.open(content).subscribe({
-      complete: () => {},
-    });
+    this.dialogs
+      .open(content, {
+        size: 'fullscreen',
+      })
+      .subscribe({
+        complete: () => {},
+      });
   }
   closeCreateExerciseDialog() {}
 }

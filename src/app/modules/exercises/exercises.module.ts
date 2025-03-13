@@ -10,7 +10,7 @@ import { ExercisesListComponent } from './components/exercises-list/exercises-li
 import { SharedModule } from '../shared/shared.module';
 import { MuscleGroupsModule } from '../muscle-groups/muscle-groups.module';
 
-import { CreateEditExerciseFormComponent } from './components/create-edit-exercise/create-edit-exercise-form.component';
+import { CreateEditExerciseFormComponent } from './components/create-edit-exercise-form/create-edit-exercise-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,11 @@ import { CreateEditExerciseFormComponent } from './components/create-edit-exerci
     ExercisesListComponent,
     CreateEditExerciseFormComponent,
   ],
-  exports: [CreateEditExerciseFormComponent],
+  exports: [
+    ExercisesRouteComponent,
+    CreateEditExerciseFormComponent,
+    ExercisesListComponent,
+  ],
   imports: [
     ExercisesRoutingModule,
 

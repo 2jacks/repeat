@@ -1,5 +1,8 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+}
+
+.card {
+  margin: 1rem 0.7rem;
 }

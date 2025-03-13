@@ -1,6 +1,6 @@
 <form tuiForm="l" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
   <header tuiHeader>
-    <h3 tuiTitle>Новое упражнение</h3>
+    <h3 tuiTitle>{{ titleText() }}</h3>
   </header>
 
   <tui-textfield>
@@ -26,17 +26,14 @@
     />
   </tui-multi-select>
 
-  <tui-textfield>
-    <label tuiLabel>Описание</label>
-    <input
-      formControlName="description"
-      placeholder="Опишите упражнение"
-      tuiTextfield
-    />
-  </tui-textfield>
+  <tui-textarea formControlName="description">Описание</tui-textarea>
 
   <footer>
-    <button tuiButton type="submit">Создать</button>
-    <button appearance="flat" tuiButton type="button">Отмена</button>
+    <button tuiButton type="submit">
+      {{ confirmButtonText() }}
+    </button>
+    <button appearance="flat" tuiButton type="button" (click)="onCancel()">
+      {{ cancelButtonText() }}
+    </button>
   </footer>
 </form>

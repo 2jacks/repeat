@@ -10,9 +10,10 @@
     <tui-icon icon="@tui.plus"></tui-icon>
   </button>
 
-  <ng-template #createExerciseForm>
+  <ng-template #createExerciseForm let-observer>
     <app-create-edit-exercise-form
-      (afterSubmit)="closeCreateExerciseDialog()"
+      (afterSubmit)="observer.complete()"
+      (afterCancel)="observer.complete()"
     ></app-create-edit-exercise-form>
   </ng-template>
 </section>

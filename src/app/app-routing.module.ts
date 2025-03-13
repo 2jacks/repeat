@@ -14,21 +14,42 @@ const routes: Routes = [
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'exercises',
-    // component: ExercisesRouteComponent,
-    loadChildren: () =>
-      import('./modules/exercises/exercises.module').then(
-        (m) => m.ExercisesModule
-      ),
+    path: 'workout',
+    // redirectTo: 'workout/exercises',
+    children: [
+      {
+        path: 'exercises',
+        loadChildren: () =>
+          import('./modules/exercises/exercises.module').then(
+            (m) => m.ExercisesModule
+          ),
+      },
+      {
+        path: 'muscle_groups',
+        // component: MuscleGroupsRouteComponent,
+        loadChildren: () =>
+          import('./modules/muscle-groups/muscle-groups.module').then(
+            (m) => m.MuscleGroupsModule
+          ),
+      },
+      {
+        path: 'training',
+        loadChildren: () =>
+          import('./modules/training/training.module').then(
+            (m) => m.TrainingModule
+          ),
+      },
+    ],
   },
-  {
-    path: 'muscle_groups',
-    // component: MuscleGroupsRouteComponent,
-    loadChildren: () =>
-      import('./modules/muscle-groups/muscle-groups.module').then(
-        (m) => m.MuscleGroupsModule
-      ),
-  },
+  // {
+  //   path: 'exercises',
+  //   // component: ExercisesRouteComponent,
+  //   loadChildren: () =>
+  //     import('./modules/exercises/exercises.module').then(
+  //       (m) => m.ExercisesModule
+  //     ),
+  // },
+
   {
     path: 'app_settings',
     // component: AppSettingsRouteComponent,

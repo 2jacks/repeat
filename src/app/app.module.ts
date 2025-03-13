@@ -14,6 +14,7 @@ import { MuscleGroupsModule } from './modules/muscle-groups/muscle-groups.module
 import { AppSettingsModule } from './modules/app-settings/app-settings.module';
 import { HomeModule } from './modules/home/home.module';
 import { ExercisesModule } from './modules/exercises/exercises.module';
+import { TrainingModule } from './modules/training/training.module';
 import { DatabaseService } from './services/database.service';
 import { SharedModule } from './modules/shared/shared.module';
 
@@ -28,6 +29,7 @@ import { SharedModule } from './modules/shared/shared.module';
     HomeModule,
     AppSettingsModule,
     ExercisesModule,
+    TrainingModule,
     MuscleGroupsModule,
     BrowserAnimationsModule,
     TuiRoot,

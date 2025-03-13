@@ -14,6 +14,8 @@ tui-root[data-platform="android"] .root {
 .header {
   flex: unset;
   box-shadow: 0px 5px 10px 0px rgba(34, 60, 80, 0.2);
+
+  z-index: 2;
 }
 
 .main {
@@ -24,4 +26,5 @@ tui-root[data-platform="android"] .root {
   max-height: 100%;
 
   position: relative;
+  z-index: 1;
 }

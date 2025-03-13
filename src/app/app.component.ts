@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { DatabaseService } from './services/database.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 interface ITabItem {
   label: string;
   path: string;
   icon: string;
+  children?: ITabItem[];
 }
 
 @Component({
@@ -20,33 +22,58 @@ export class AppComponent {
   public tabs: ITabItem[] = [
     {
       label: 'More on Train',
-      icon: 'triangle',
-      path: 'exercises',
+      icon: 'dumbbell',
+      path: 'workout',
+      children: [
+        {
+          label: 'Упражнения',
+          path: 'exercises',
+          icon: 'dumbbell',
+        },
+        {
+          label: 'Тренировки',
+          path: 'training',
+          icon: 'land-plot',
+        },
+      ],
     },
     {
       label: 'Today',
-      icon: 'square',
+      icon: 'calendar-range',
       path: 'home',
     },
     {
       label: 'More on Food',
-      icon: 'triangle',
+      icon: 'apple',
       path: 'food',
     },
   ];
-  public activeItemIndex: number = 1;
+  public activeItemIndex: number = this.getActiveTabIndex();
+
+  public isDropdownOpen: boolean = false;
 
   constructor(
     private dbService: DatabaseService,
     private menuController: MenuController,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
+
+  private getActiveTabIndex(): number {
+    const currentPath = this.location.path().split('/')[1];
+    if (!currentPath) {
+      return 1; // Если путь пустой, возвращаем индекс "Today"
+    }
+
+    const index = this.tabs.findIndex((tab) => tab.path === currentPath);
+    return index >= 0 ? index : 1;
+  }
 
   ngOnInit() {
     this.dbService.initializeDatabase().then(() => {
-      setTimeout(() => {
-        this.isDatabaseInitialized = true;
-      }, 3000);
+      this.isDatabaseInitialized = true;
+
+      this.activeItemIndex = this.getActiveTabIndex();
     });
   }
 
@@ -56,5 +83,13 @@ export class AppComponent {
 
   closeMenu() {
     this.menuController.close();
+  }
+
+  protected toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  protected onActiveZone(active: boolean): void {
+    this.isDropdownOpen = active && this.isDropdownOpen;
   }
 }

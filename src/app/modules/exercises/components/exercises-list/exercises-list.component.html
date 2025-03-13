@@ -1,6 +1,9 @@
 <ul class="root">
-  <li *ngFor="let exercise of exercises()">
-    <div tuiAppearance="floating" tuiCardLarge class="tui-space_top-4">
+  <tui-swipe-actions
+    *ngFor="let exercise of exercises()"
+    [style.--t-actions-width]="136"
+  >
+    <div tuiAppearance="floating" tuiCardLarge class="card">
       <header tuiHeader>
         <h2 tuiTitle>{{ exercise.name }}</h2>
         <aside tuiAccessories>
@@ -15,5 +18,28 @@
 
       <section>{{ exercise.description }}</section>
     </div>
-  </li>
+
+    <button
+      appearance="outline"
+      iconStart="@tui.pencil-line"
+      size="m"
+      tuiIconButton
+      tuiSwipeAction
+      type="button"
+      (click)="onEditButtonClick(exercise)"
+    >
+      Edit
+    </button>
+    <button
+      appearance="outline-destructive"
+      iconStart="@tui.trash"
+      size="m"
+      tuiIconButton
+      tuiSwipeAction
+      type="button"
+      (click)="onDeleteButtonClick(exercise)"
+    >
+      Delete
+    </button>
+  </tui-swipe-actions>
 </ul>

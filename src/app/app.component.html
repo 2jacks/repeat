@@ -5,15 +5,48 @@
       <tui-app-bar class="header">Repeat App</tui-app-bar>
       <main class="main"><router-outlet></router-outlet></main>
       <nav tuiTabBar class="tabs" [(activeItemIndex)]="activeItemIndex">
-        <button
-          *ngFor="let tab of tabs"
-          tuiTabBarItem
-          type="button"
-          [icon]="tab.icon"
-          (click)="onTabClick(tab)"
-        >
-          {{ tab.label }}
-        </button>
+        <ng-container *ngFor="let tab of tabs">
+          <button
+            *ngIf="!tab.children"
+            tuiTabBarItem
+            type="button"
+            [icon]="tab.icon"
+            (click)="onTabClick(tab)"
+          >
+            {{ tab.label }}
+          </button>
+          <ng-container>
+            <button
+              *ngIf="tab.children"
+              tuiTabBarItem
+              type="button"
+              [icon]="tab.icon"
+              [tuiDropdown]="dropdownContent"
+              [tuiDropdownManual]="isDropdownOpen"
+              (tuiActiveZoneChange)="onActiveZone($event)"
+              (click)="toggleDropdown()"
+            >
+              {{ tab.label }}
+            </button>
+            <ng-template #dropdownContent>
+              <tui-data-list role="menu">
+                <tui-opt-group>
+                  <button
+                    *ngFor="let child of tab.children"
+                    #rla="routerLinkActive"
+                    routerLinkActive
+                    [routerLink]="[tab.path, child.path]"
+                    iconStart="@tui.{{ child.icon }}"
+                    [appearance]="rla.isActive ? 'outline' : 'flat'"
+                    tuiButton
+                  >
+                    {{ child.label }}
+                  </button>
+                </tui-opt-group>
+              </tui-data-list>
+            </ng-template>
+          </ng-container>
+        </ng-container>
       </nav>
     </div>
   </ng-container>
