@@ -26,11 +26,6 @@ import { SharedModule } from './modules/shared/shared.module';
     IonicModule.forRoot(),
     AppRoutingModule,
 
-    HomeModule,
-    AppSettingsModule,
-    ExercisesModule,
-    TrainingModule,
-    MuscleGroupsModule,
     BrowserAnimationsModule,
     TuiRoot,
     SharedModule,
