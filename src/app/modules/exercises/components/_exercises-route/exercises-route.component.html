@@ -12,6 +12,7 @@
 
   <ng-template #createExerciseForm let-observer>
     <app-create-edit-exercise-form
+      style="padding: 50px 0px"
       (afterSubmit)="observer.complete()"
       (afterCancel)="observer.complete()"
     ></app-create-edit-exercise-form>

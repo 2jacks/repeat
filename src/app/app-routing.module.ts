@@ -15,7 +15,6 @@ const routes: Routes = [
   },
   {
     path: 'workout',
-    // redirectTo: 'workout/exercises',
     children: [
       {
         path: 'exercises',
@@ -26,7 +25,6 @@ const routes: Routes = [
       },
       {
         path: 'muscle_groups',
-        // component: MuscleGroupsRouteComponent,
         loadChildren: () =>
           import('./modules/muscle-groups/muscle-groups.module').then(
             (m) => m.MuscleGroupsModule
@@ -41,18 +39,9 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'exercises',
-  //   // component: ExercisesRouteComponent,
-  //   loadChildren: () =>
-  //     import('./modules/exercises/exercises.module').then(
-  //       (m) => m.ExercisesModule
-  //     ),
-  // },
 
   {
     path: 'app_settings',
-    // component: AppSettingsRouteComponent,
     loadChildren: () =>
       import('./modules/app-settings/app-settings.module').then(
         (m) => m.AppSettingsModule

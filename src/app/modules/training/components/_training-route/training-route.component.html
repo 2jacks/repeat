@@ -1,0 +1,18 @@
+<div class="training-container">
+  <h1>Тренировки</h1>
+
+  <div class="trainings-list">
+    <div *ngFor="let training of trainings" class="training-item">
+      <h2>{{ training.name }}</h2>
+      <div class="exercises-list">
+        <div
+          *ngFor="let te of training.trainingExercises"
+          class="exercise-item"
+        >
+          <span class="exercise-name">{{ te.exercise.name }}</span>
+          <span class="exercise-details">{{ te.sets }}x{{ te.reps }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

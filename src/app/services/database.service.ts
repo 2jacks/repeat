@@ -7,10 +7,12 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 import { MuscleGroup } from '../modules/muscle-groups/entities/muscle-group.entity';
 import { Exercise } from '../modules/exercises/entities/exercise.entity';
+import { TrainingExercise } from '../modules/training/entities/training-exercise.entity';
+import { Training } from '../modules/training/entities/training.entity';
 
 import * as MIGRATIONS from './migrations';
 
-const ENTITIES = [Exercise, MuscleGroup];
+const ENTITIES = [Exercise, MuscleGroup, TrainingExercise, Training];
 
 @Injectable()
 export class DatabaseService {
