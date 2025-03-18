@@ -1,7 +1,5 @@
-<div [style.width.px]="size" [style.height.px]="size">
-  <ion-icon
-    [style.fontSize.px]="size"
-    [style.color]="color"
-    src="assets/body-parts/{{ imgName() }}-50.svg"
-  ></ion-icon>
-</div>
+<tui-icon
+  icon="/assets/body-parts/{{ imgName() }}-50.svg"
+  [style.fontSize.px]="size"
+  [style.color]="color"
+></tui-icon>

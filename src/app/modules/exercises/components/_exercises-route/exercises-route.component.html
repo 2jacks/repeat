@@ -1,25 +1,19 @@
-<app-exercises-list />
-<ion-fab slot="fixed" horizontal="end" vertical="bottom">
-  <ion-fab-button id="open-modal-new-exercise">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-<ion-modal #modal trigger="open-modal-new-exercise">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button (click)="modal.dismiss()">
-            <ion-icon name="backspace-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Новое упражнение</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <app-create-edit-exercise-form
-        (afterSubmit)="modal.dismiss()"
-      ></app-create-edit-exercise-form>
-    </ion-content>
+<section class="root">
+  <app-exercises-list />
+
+  <button
+    tuiButton
+    class="fab"
+    size="l"
+    (click)="openCreateExerciseDialog(createExerciseForm)"
+  >
+    <tui-icon icon="@tui.plus"></tui-icon>
+  </button>
+
+  <ng-template #createExerciseForm let-observer>
+    <app-create-edit-exercise-form
+      (afterSubmit)="observer.complete()"
+      (afterCancel)="observer.complete()"
+    ></app-create-edit-exercise-form>
   </ng-template>
-</ion-modal>
+</section>

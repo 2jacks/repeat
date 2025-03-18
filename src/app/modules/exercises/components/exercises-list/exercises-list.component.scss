@@ -1,5 +1,8 @@
-.muscleGroupsList {
+.root {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+}
+
+.card {
+  margin: 1rem 0.7rem;
 }

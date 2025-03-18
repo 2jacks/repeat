@@ -1,53 +1,53 @@
-<ion-app>
+<tui-root>
+  <tui-loader *ngIf="!isDatabaseInitialized" [overlay]="true"></tui-loader>
   <ng-container *ngIf="isDatabaseInitialized">
-    <ion-menu contentId="app">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Меню</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <app-menu (navigationEnd)="closeMenu()"></app-menu>
-      </ion-content>
-    </ion-menu>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Repeat</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content id="app" fixed-slot-placement="before">
-      <router-outlet></router-outlet>
-    </ion-content>
-
-    <ion-footer>
-      <ion-toolbar>
-        <ion-tabs>
-          <ion-tab-bar slot="bottom">
-            <ng-container *ngFor="let tab of tabs">
-              <ion-tab-button [tab]="tab.path">
-                <ion-icon aria-hidden="true" [name]="tab.icon"></ion-icon>
-                <ion-label>{{ tab.label }}</ion-label>
-              </ion-tab-button>
-            </ng-container>
-            <!-- <ion-tab-button tab="training">
-              <ion-icon aria-hidden="true" name="triangle"></ion-icon>
-              <ion-label>Тренировки</ion-label>
-            </ion-tab-button>
-
-            <ion-tab-button tab="food">
-              <ion-icon aria-hidden="true" name="square"></ion-icon>
-              <ion-label>Питание</ion-label>
-            </ion-tab-button> -->
-          </ion-tab-bar>
-        </ion-tabs>
-      </ion-toolbar>
-    </ion-footer>
+    <div class="root">
+      <tui-app-bar class="header">Repeat App</tui-app-bar>
+      <main class="main"><router-outlet></router-outlet></main>
+      <nav tuiTabBar class="tabs" [(activeItemIndex)]="activeItemIndex">
+        <ng-container *ngFor="let tab of tabs">
+          <button
+            *ngIf="!tab.children"
+            tuiTabBarItem
+            type="button"
+            [icon]="tab.icon"
+            (click)="onTabClick(tab)"
+          >
+            {{ tab.label }}
+          </button>
+          <ng-container>
+            <button
+              *ngIf="tab.children"
+              tuiTabBarItem
+              type="button"
+              [icon]="tab.icon"
+              [tuiDropdown]="dropdownContent"
+              [tuiDropdownManual]="isDropdownOpen"
+              (tuiActiveZoneChange)="onActiveZone($event)"
+              (click)="toggleDropdown()"
+            >
+              {{ tab.label }}
+            </button>
+            <ng-template #dropdownContent>
+              <tui-data-list role="menu">
+                <tui-opt-group>
+                  <button
+                    *ngFor="let child of tab.children"
+                    #rla="routerLinkActive"
+                    routerLinkActive
+                    [routerLink]="[tab.path, child.path]"
+                    iconStart="@tui.{{ child.icon }}"
+                    [appearance]="rla.isActive ? 'outline' : 'flat'"
+                    tuiButton
+                  >
+                    {{ child.label }}
+                  </button>
+                </tui-opt-group>
+              </tui-data-list>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </nav>
+    </div>
   </ng-container>
-
-  <div *ngIf="!isDatabaseInitialized" class="full-size-center-block">
-    <ion-spinner color="primary"></ion-spinner>
-  </div>
-</ion-app>
+</tui-root>

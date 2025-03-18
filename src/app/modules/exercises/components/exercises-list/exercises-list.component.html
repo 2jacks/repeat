@@ -1,20 +1,45 @@
-<ul>
-  <li *ngFor="let exercise of exercises()">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>
-          <div class="muscleGroupsList">
-            <ng-container *ngFor="let muscle_group of exercise.muscleGroups">
-              <app-muscle-group-icon [group]="muscle_group.id"
-            /></ng-container>
-          </div>
-        </ion-card-subtitle>
-        <ion-card-title>{{ exercise.name }}</ion-card-title>
-      </ion-card-header>
+<ul class="root">
+  <tui-swipe-actions
+    *ngFor="let exercise of exercises()"
+    [style.--t-actions-width]="136"
+  >
+    <div tuiAppearance="floating" tuiCardLarge class="card">
+      <header tuiHeader>
+        <h2 tuiTitle>{{ exercise.name }}</h2>
+        <aside tuiAccessories>
+          <tui-badge appearance="neutral" size="l">
+            <app-muscle-group-icon
+              *ngFor="let muscle_group of exercise.muscleGroups"
+              [group]="muscle_group.id"
+            />
+          </tui-badge>
+        </aside>
+      </header>
 
-      <ion-card-content>
-        {{ exercise.description }}
-      </ion-card-content>
-    </ion-card>
-  </li>
+      <section>{{ exercise.description }}</section>
+    </div>
+
+    <button
+      appearance="outline"
+      iconStart="@tui.pencil-line"
+      size="m"
+      tuiIconButton
+      tuiSwipeAction
+      type="button"
+      (click)="onEditButtonClick(exercise)"
+    >
+      Edit
+    </button>
+    <button
+      appearance="outline-destructive"
+      iconStart="@tui.trash"
+      size="m"
+      tuiIconButton
+      tuiSwipeAction
+      type="button"
+      (click)="onDeleteButtonClick(exercise)"
+    >
+      Delete
+    </button>
+  </tui-swipe-actions>
 </ul>

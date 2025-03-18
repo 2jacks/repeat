@@ -21,27 +21,30 @@ export class DatabaseService {
   constructor(private env: Environment) {}
 
   public async initializeDatabase(): Promise<void> {
-    this.sqliteConnection = new SQLiteConnection(CapacitorSQLite);
-    this.platform = Capacitor.getPlatform();
+    return new Promise((resolve) => {
+      this.sqliteConnection = new SQLiteConnection(CapacitorSQLite);
+      this.platform = Capacitor.getPlatform();
 
-    if (this.platform !== 'web') {
-      await this._initializeDataSource();
-    } else {
-      window.addEventListener('DOMContentLoaded', async () => {
-        const jeepEl = document.createElement('jeep-sqlite');
-        document.body.appendChild(jeepEl);
-        customElements
-          .whenDefined('jeep-sqlite')
-          .then(async () => {
-            await this.sqliteConnection.initWebStore();
-            await this._initializeDataSource();
-          })
-          .catch((err) => {
-            console.log(`Error: ${err}`);
-            throw new Error(`Error: ${err}`);
-          });
-      });
-    }
+      if (this.platform !== 'web') {
+        this._initializeDataSource().then(resolve);
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          const jeepEl = document.createElement('jeep-sqlite');
+          document.body.appendChild(jeepEl);
+          customElements
+            .whenDefined('jeep-sqlite')
+            .then(() => {
+              this.sqliteConnection.initWebStore().then(() => {
+                this._initializeDataSource().then(resolve);
+              });
+            })
+            .catch((err) => {
+              console.log(`Error: ${err}`);
+              throw new Error(`Error: ${err}`);
+            });
+        });
+      }
+    });
   }
 
   public getDatabaseConnection(): DataSource | null {

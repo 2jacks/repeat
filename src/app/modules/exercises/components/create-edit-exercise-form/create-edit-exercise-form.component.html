@@ -1,0 +1,39 @@
+<form tuiForm="l" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+  <header tuiHeader>
+    <h3 tuiTitle>{{ titleText() }}</h3>
+  </header>
+
+  <tui-textfield>
+    <label tuiLabel>Название</label>
+    <input
+      formControlName="name"
+      placeholder="Введите название упражнения"
+      tuiTextfield
+    />
+  </tui-textfield>
+
+  <tui-multi-select
+    formControlName="muscleGroups"
+    [stringify]="stringifyMuscleGroup"
+    [tuiTextfieldLabelOutside]="true"
+  >
+    Выберите мышечные группы
+    <tui-data-list-wrapper
+      *tuiDataList
+      tuiMultiSelectGroup
+      [items]="muscleGroups"
+      [itemContent]="stringifyMuscleGroup | tuiStringifyContent"
+    />
+  </tui-multi-select>
+
+  <tui-textarea formControlName="description">Описание</tui-textarea>
+
+  <footer>
+    <button tuiButton type="submit">
+      {{ confirmButtonText() }}
+    </button>
+    <button appearance="flat" tuiButton type="button" (click)="onCancel()">
+      {{ cancelButtonText() }}
+    </button>
+  </footer>
+</form>
