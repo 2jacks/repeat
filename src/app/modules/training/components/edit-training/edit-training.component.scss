@@ -1,0 +1,81 @@
+.create-training-form {
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .title {
+    margin-bottom: 16px;
+  }
+
+  .tui-form__row {
+    margin-bottom: 2rem;
+  }
+
+  .exercises-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .exercises-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .exercise-form {
+    width: 100%;
+
+    display: flex;
+
+    background: var(--tui-base-02);
+    border-radius: var(--tui-radius-l);
+    padding: 0 1rem;
+
+    &:first-child {
+      margin-top: 12px;
+    }
+
+    &__content {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    &__select {
+      width: 100%;
+
+      display: flex;
+      gap: 10px;
+
+      tui-select {
+        flex: 1;
+      }
+
+      button {
+        flex-shrink: 0;
+      }
+    }
+
+    &__numbers {
+      flex: 1;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .number-input {
+        flex: 1;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep .t-header {
+    padding: 0px 6px !important;
+  }
+}
+
+.card {
+  margin: 1rem 0.7rem;
+}
+
+.exercise {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exercise-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercises-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

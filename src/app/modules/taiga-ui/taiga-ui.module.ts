@@ -4,17 +4,20 @@ import {
   TuiButton,
   TuiDataList,
   TuiDropdown,
+  TuiExpand,
   TuiIcon,
   TuiLink,
   TuiLoader,
   tuiLoaderOptionsProvider,
   TuiSelect,
+  TuiSurface,
   TuiTextfield,
   TuiTitle,
 } from '@taiga-ui/core';
 
 import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import {
+  TuiAccordion,
   TuiBadge,
   TuiDataListWrapper,
   TuiInputFiles,
@@ -23,6 +26,7 @@ import {
 import {
   TuiAppBar,
   TuiCardLarge,
+  TuiCardMedium,
   TuiCell,
   TuiForm,
   TuiHeader,
@@ -34,7 +38,8 @@ import {
 } from '@taiga-ui/addon-mobile';
 import {
   TuiMultiSelectModule,
-  TuiTextareaComponent,
+  TuiSelectModule,
+  TuiIslandDirective,
   TuiTextareaModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
@@ -45,6 +50,7 @@ const MODULES = [
   TuiAppBar,
   TuiTabBar,
   TuiCardLarge,
+  TuiCardMedium,
   TuiTitle,
   TuiHeader,
   TuiBadge,
@@ -67,7 +73,10 @@ const MODULES = [
   TuiLink,
   TuiObscured,
   TuiActiveZone,
-  // TuiTextareaComponent,
+  TuiAccordion,
+  TuiExpand,
+  TuiSelectModule,
+  TuiSurface,
 ] as any[];
 
 @NgModule({

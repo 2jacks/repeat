@@ -1,18 +1,21 @@
-<div class="training-container">
-  <h1>Тренировки</h1>
+<section class="root">
+  <app-training-list />
 
-  <div class="trainings-list">
-    <div *ngFor="let training of trainings" class="training-item">
-      <h2>{{ training.name }}</h2>
-      <div class="exercises-list">
-        <div
-          *ngFor="let te of training.trainingExercises"
-          class="exercise-item"
-        >
-          <span class="exercise-name">{{ te.exercise.name }}</span>
-          <span class="exercise-details">{{ te.sets }}x{{ te.reps }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <button
+    tuiButton
+    appearance="accent"
+    class="fab"
+    size="l"
+    (click)="openCreateTrainingDialog(createTrainingForm)"
+  >
+    <tui-icon icon="@tui.plus"></tui-icon>
+  </button>
+
+  <ng-template #createTrainingForm let-observer>
+    <app-create-training-form
+      style="padding: 50px 0px"
+      (afterSubmit)="observer.complete()"
+      (afterCancel)="observer.complete()"
+    ></app-create-training-form>
+  </ng-template>
+</section>

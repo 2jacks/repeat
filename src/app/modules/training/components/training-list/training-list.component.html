@@ -1,0 +1,69 @@
+<ul class="root">
+  <tui-accordion class="accordion" [rounded]="false" [closeOthers]="false">
+    <!-- <tui-swipe-actions
+      *ngFor="let training of trainings()"
+      [style.--t-actions-width]="136"
+    > -->
+    <tui-accordion-item
+      *ngFor="let training of trainings()"
+      borders="top-bottom"
+    >
+      <tui-swipe-actions [style.--t-actions-width]="136">
+        <span tuiTitle>
+          <strong>{{ training.name }}</strong>
+        </span>
+        <button
+          appearance="outline"
+          iconStart="@tui.pencil-line"
+          size="m"
+          tuiIconButton
+          tuiSwipeAction
+          type="button"
+          (click)="onEditButtonClick(training)"
+        >
+          Edit
+        </button>
+        <button
+          appearance="outline-destructive"
+          iconStart="@tui.trash"
+          size="m"
+          tuiIconButton
+          tuiSwipeAction
+          type="button"
+          (click)="onDeleteButtonClick(training)"
+        >
+          Delete
+        </button>
+      </tui-swipe-actions>
+
+      <ng-template tuiAccordionItemContent>
+        <div class="accordion-content">
+          <div class="exercises-list">
+            <div
+              *ngFor="let exercise of training.trainingExercises"
+              class="exercise"
+            >
+              {{ exercise.exercise.name }}
+              <div class="exercise-info">
+                <tui-badge
+                  size="l"
+                  [style.background]="'var(--tui-chart-categorical-10)'"
+                  iconStart="@tui.align-justify"
+                >
+                  {{ exercise.sets }}
+                </tui-badge>
+                <tui-badge
+                  size="l"
+                  [style.background]="'var(--tui-chart-categorical-16)'"
+                  iconStart="@tui.repeat-2"
+                >
+                  {{ exercise.reps }}
+                </tui-badge>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </tui-accordion-item>
+  </tui-accordion>
+</ul>
