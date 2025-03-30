@@ -35,6 +35,11 @@ export class AppComponent {
           path: 'training',
           icon: 'land-plot',
         },
+        {
+          label: 'Тренировочные программы',
+          path: 'training-program',
+          icon: 'blocks',
+        },
       ],
     },
     {
@@ -59,16 +64,6 @@ export class AppComponent {
     private location: Location
   ) {}
 
-  private getActiveTabIndex(): number {
-    const currentPath = this.location.path().split('/')[1];
-    if (!currentPath) {
-      return 1; // Если путь пустой, возвращаем индекс "Today"
-    }
-
-    const index = this.tabs.findIndex((tab) => tab.path === currentPath);
-    return index >= 0 ? index : 1;
-  }
-
   ngOnInit() {
     this.dbService.initializeDatabase().then(() => {
       this.isDatabaseInitialized = true;
@@ -81,7 +76,11 @@ export class AppComponent {
     this.router.navigate([tab.path]);
   }
 
-  closeMenu() {
+  public onBackButtonClick() {
+    this.location.back();
+  }
+
+  public closeMenu() {
     this.menuController.close();
   }
 
@@ -91,5 +90,15 @@ export class AppComponent {
 
   protected onActiveZone(active: boolean): void {
     this.isDropdownOpen = active && this.isDropdownOpen;
+  }
+
+  private getActiveTabIndex(): number {
+    const currentPath = this.location.path().split('/')[1];
+    if (!currentPath) {
+      return 1; // Если путь пустой, возвращаем индекс "Today"
+    }
+
+    const index = this.tabs.findIndex((tab) => tab.path === currentPath);
+    return index >= 0 ? index : 1;
   }
 }

@@ -18,9 +18,7 @@ export class TrainingListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.trainingRegistryService.getAll().then((res) => {
-      console.log(res);
-    });
+    this.trainingRegistryService.getAll();
   }
 
   public onEditButtonClick(exercise: Training) {

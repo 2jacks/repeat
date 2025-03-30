@@ -53,6 +53,29 @@ export class InitialMigration1739812301396 implements MigrationInterface {
       );
     `);
 
+    // Создание таблицы training_program
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "training_program" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "name" TEXT NOT NULL,
+        "description" TEXT,
+        "duration_weeks" INTEGER NOT NULL,
+        "goal" TEXT NOT NULL
+      );
+    `);
+
+    // Создание таблицы training_program_training
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "training_program_to_training" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "program_id" INTEGER NOT NULL,
+        "training_id" INTEGER NOT NULL,
+        "day_of_week" INTEGER NOT NULL,
+        FOREIGN KEY ("program_id") REFERENCES "training_program"("id") ON DELETE CASCADE,
+        FOREIGN KEY ("training_id") REFERENCES "training"("id") ON DELETE CASCADE
+      );
+    `);
+
     // Insert MuscleGroups
     await queryRunner.query(
       `INSERT INTO muscle_group (id, name) VALUES
@@ -104,9 +127,29 @@ export class InitialMigration1739812301396 implements MigrationInterface {
         (2, 2, 3, 8);
       `
     );
+
+    // Вставка тренировочных программ
+    await queryRunner.query(
+      `INSERT INTO training_program (id, name, description, duration_weeks, goal) VALUES
+        (1, 'Программа для начинающих', 'Программа для начинающих на 4 недели', 4, 'Похудение'),
+        (2, 'Программа для продвинутых', 'Программа для продвинутых на 8 недель', 8, 'Набор массы');
+      `
+    );
+
+    // Вставка тренировок в программы
+    await queryRunner.query(
+      `INSERT INTO training_program_to_training (program_id, training_id, day_of_week) VALUES
+        (1, 1, 1),
+        (1, 2, 3),
+        (2, 1, 2),
+        (2, 2, 4);
+      `
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE IF EXISTS "training_program_training"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "training_program"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_to_exercise"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "muscle_group_to_exercise"`);

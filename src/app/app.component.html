@@ -2,7 +2,20 @@
   <tui-loader *ngIf="!isDatabaseInitialized" [overlay]="true"></tui-loader>
   <ng-container *ngIf="isDatabaseInitialized">
     <div class="root">
-      <tui-app-bar class="header">Repeat App</tui-app-bar>
+      <tui-app-bar class="header">
+        <button
+          tuiButton
+          tuiSlot="left"
+          type="button"
+          [size]="'m'"
+          appearance="primary"
+          iconStart="@tui.arrow-left"
+          (click)="onBackButtonClick()"
+        >
+          Назад
+        </button>
+        Repeat</tui-app-bar
+      >
       <main class="main"><router-outlet></router-outlet></main>
       <nav tuiTabBar class="tabs" [(activeItemIndex)]="activeItemIndex">
         <ng-container *ngFor="let tab of tabs">
@@ -39,6 +52,7 @@
                     iconStart="@tui.{{ child.icon }}"
                     [appearance]="rla.isActive ? 'outline' : 'flat'"
                     tuiButton
+                    class="dropdown-menu__item"
                   >
                     {{ child.label }}
                   </button>

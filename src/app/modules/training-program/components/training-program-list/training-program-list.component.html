@@ -1,0 +1,57 @@
+<div class="training-program-list">
+  <div class="training-program-list__content">
+    <tui-accordion class="accordion" [rounded]="false" [closeOthers]="false">
+      <tui-accordion-item
+        *ngFor="let trainingProgram of programs()"
+        borders="top-bottom"
+      >
+        <tui-swipe-actions [style.--t-actions-width]="136">
+          <div tuiTitle class="header">
+            <strong>{{ trainingProgram.name }}</strong>
+            <div class="chips">
+              <tui-chip appearance="positive">
+                Длительность (недели):
+                {{ trainingProgram.durationWeeks }}
+              </tui-chip>
+              <tui-chip appearance="warning">
+                Цель:
+                {{ trainingProgram.goal }}
+              </tui-chip>
+            </div>
+          </div>
+          <button
+            appearance="outline"
+            iconStart="@tui.pencil-line"
+            size="m"
+            tuiIconButton
+            tuiSwipeAction
+            type="button"
+            (click)="onEditClick(trainingProgram)"
+          >
+            Edit
+          </button>
+          <button
+            appearance="outline-destructive"
+            iconStart="@tui.trash"
+            size="m"
+            tuiIconButton
+            tuiSwipeAction
+            type="button"
+            (click)="onDeleteClick(trainingProgram)"
+          >
+            Delete
+          </button>
+        </tui-swipe-actions>
+
+        <ng-template tuiAccordionItemContent>
+          <div class="accordion-content">
+            <div *ngFor="let training of trainingProgram.trainings" class="training">
+              {{ training.training.name }}
+              <tui-badge>{{ getWeekDayName(training.dayOfWeek) }}</tui-badge>
+            </div>
+          </div>
+        </ng-template>
+      </tui-accordion-item>
+    </tui-accordion>
+  </div>
+</div>

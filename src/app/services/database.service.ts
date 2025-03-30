@@ -9,10 +9,18 @@ import { MuscleGroup } from '../modules/muscle-groups/entities/muscle-group.enti
 import { Exercise } from '../modules/exercises/entities/exercise.entity';
 import { TrainingExercise } from '../modules/training/entities/training-exercise.entity';
 import { Training } from '../modules/training/entities/training.entity';
-
+import { TrainingProgram } from '../modules/training-program/entities/training-program.entity';
 import * as MIGRATIONS from './migrations';
+import { TrainingProgramTraining } from '../modules/training-program/entities/training-program-training.entity';
 
-const ENTITIES = [Exercise, MuscleGroup, TrainingExercise, Training];
+const ENTITIES = [
+  Exercise,
+  MuscleGroup,
+  TrainingExercise,
+  Training,
+  TrainingProgram,
+  TrainingProgramTraining,
+];
 
 @Injectable()
 export class DatabaseService {

@@ -1,0 +1,121 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="program-form">
+  <h2 class="tui-text_h3 title" *ngIf="!isEditMode">
+    Создание тренировочного плана
+  </h2>
+  <h2 class="tui-text_h3 title" *ngIf="isEditMode">
+    Редактирование тренировочного плана
+  </h2>
+  <div class="tui-form__row">
+    <tui-textfield>
+      <label tuiLabel>Название</label>
+
+      <input tuiTextfield formControlName="name" />
+    </tui-textfield>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-textfield>
+      <label tuiLabel>Описание</label>
+
+      <input tuiTextfield formControlName="description" />
+    </tui-textfield>
+  </div>
+
+  <div class="tui-form__row training-plan__small">
+    <tui-textfield>
+      <label tuiLabel>Длительность</label>
+
+      <input
+        tuiInputNumber
+        formControlName="durationWeeks"
+        placeholder="Недель"
+      />
+    </tui-textfield>
+    <tui-select formControlName="goal" [stringify]="stringifyGoal">
+      Цель
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="goalItems"
+        [itemContent]="stringifyGoal | tuiStringifyContent"
+      />
+    </tui-select>
+  </div>
+
+  <!-- <div class="tui-form__row"></div> -->
+
+  <div class="form-row trainings-section" formArrayName="trainings">
+    <div class="trainings-header">
+      <h4>Тренировки</h4>
+      <button
+        tuiButton
+        type="button"
+        appearance="secondary"
+        size="s"
+        (click)="addTraining()"
+      >
+        Добавить тренировку
+      </button>
+    </div>
+
+    <div
+      *ngFor="let training of trainingsFormArray.controls; let i = index"
+      [formGroupName]="i"
+      class="training-item"
+    >
+      <div class="training-item__content">
+        <div class="training-item__header">
+          <tui-select
+            formControlName="training"
+            [stringify]="stringifyTraining"
+          >
+            Тренировка
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="trainings"
+              [itemContent]="stringifyTraining | tuiStringifyContent"
+            />
+          </tui-select>
+          <button
+            tuiButton
+            type="button"
+            appearance="outline-destructive"
+            size="l"
+            iconStart="@tui.trash"
+            (click)="removeTraining(i)"
+            [disabled]="trainingsFormArray.length === 1"
+          ></button>
+        </div>
+
+        <tui-select formControlName="dayOfWeek" [stringify]="stringifyWeekDay">
+          День недели
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="weekDays"
+            [itemContent]="stringifyWeekDay | tuiStringifyContent"
+          />
+        </tui-select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row form-actions">
+    <button
+      tuiButton
+      type="button"
+      appearance="flat"
+      size="m"
+      class="tui-space_right-3"
+      (click)="onCancel()"
+    >
+      Отмена
+    </button>
+    <button
+      tuiButton
+      type="submit"
+      appearance="primary"
+      [disabled]="!form.valid"
+    >
+      {{ isEditMode ? "Сохранить" : "Создать" }}
+    </button>
+  </div>
+</form>

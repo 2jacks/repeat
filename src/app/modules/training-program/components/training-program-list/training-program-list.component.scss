@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trainings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.training {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

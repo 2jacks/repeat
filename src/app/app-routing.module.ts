@@ -37,15 +37,14 @@ const routes: Routes = [
             (m) => m.TrainingModule
           ),
       },
+      {
+        path: 'training-program',
+        loadChildren: () =>
+          import('./modules/training-program/training-program.module').then(
+            (m) => m.TrainingProgramModule
+          ),
+      },
     ],
-  },
-
-  {
-    path: 'app_settings',
-    loadChildren: () =>
-      import('./modules/app-settings/app-settings.module').then(
-        (m) => m.AppSettingsModule
-      ),
   },
 ];
 @NgModule({

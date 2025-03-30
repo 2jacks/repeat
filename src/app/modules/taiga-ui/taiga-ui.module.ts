@@ -19,9 +19,11 @@ import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
 import {
   TuiAccordion,
   TuiBadge,
+  TuiChip,
   TuiDataListWrapper,
   TuiInputFiles,
   TuiStringifyContentPipe,
+  TuiInputNumber,
 } from '@taiga-ui/kit';
 import {
   TuiAppBar,
@@ -39,7 +41,6 @@ import {
 import {
   TuiMultiSelectModule,
   TuiSelectModule,
-  TuiIslandDirective,
   TuiTextareaModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
@@ -77,6 +78,8 @@ const MODULES = [
   TuiExpand,
   TuiSelectModule,
   TuiSurface,
+  TuiChip,
+  TuiInputNumber,
 ] as any[];
 
 @NgModule({

@@ -28,11 +28,8 @@ export class ExercisesListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._muscleGroupRegistryService.getAll().then((res) => {
-      console.log(res);
-    });
+    this._muscleGroupRegistryService.getAll().then((res) => {});
     this._exercisesRegistryService.getAll().then((res) => {
-      console.log(res);
       this.exercises = this._exercisesRegistryService.items;
     });
   }

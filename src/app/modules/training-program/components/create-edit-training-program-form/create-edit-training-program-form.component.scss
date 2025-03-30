@@ -1,0 +1,74 @@
+.program-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.training-plan {
+  &__small {
+    width: 100%;
+
+    display: flex;
+    gap: 10px;
+
+    & > * {
+      width: 49%;
+    }
+  }
+}
+
+.trainings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.training-item {
+  margin-bottom: 1rem;
+
+  &__header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    tui-select {
+      flex: 1;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+}

@@ -1,0 +1,22 @@
+<section class="root">
+  <app-training-program-list />
+
+  <button
+    tuiButton
+    appearance="accent"
+    [style.background]="'green'"
+    class="fab"
+    size="l"
+    (click)="openCreateTrainingProgramDialog(createTrainingForm)"
+  >
+    <tui-icon icon="@tui.plus"></tui-icon>
+  </button>
+
+  <ng-template #createTrainingForm let-observer>
+    <app-create-edit-training-program-form
+      style="padding: 50px 0px"
+      (afterSubmit)="observer.complete()"
+      (afterCancel)="observer.complete()"
+    ></app-create-edit-training-program-form>
+  </ng-template>
+</section>
