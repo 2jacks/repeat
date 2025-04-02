@@ -10,8 +10,9 @@ import { Exercise } from '../modules/exercises/entities/exercise.entity';
 import { TrainingExercise } from '../modules/training/entities/training-exercise.entity';
 import { Training } from '../modules/training/entities/training.entity';
 import { TrainingProgram } from '../modules/training-program/entities/training-program.entity';
-import * as MIGRATIONS from './migrations';
 import { TrainingProgramTraining } from '../modules/training-program/entities/training-program-training.entity';
+import { Current } from '../modules/current/entities/current.entity';
+import * as MIGRATIONS from './migrations';
 
 const ENTITIES = [
   Exercise,
@@ -20,6 +21,7 @@ const ENTITIES = [
   Training,
   TrainingProgram,
   TrainingProgramTraining,
+  Current,
 ];
 
 @Injectable()

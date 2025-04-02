@@ -20,8 +20,6 @@ erDiagram
         int id PK "Идентификатор связи"
         int training_id FK "Ссылка на тренировку"
         int exercise_id FK "Ссылка на упражнение"
-        int sets "Количество подходов"
-        int reps "Количество повторений"
     }
 
     MUSCLE_GROUP_EXERCISE {
@@ -52,10 +50,7 @@ erDiagram
 
     COMPLETED_TRAINING {
         int id PK "Идентификатор проведенной тренировки"
-        int program_id FK "Ссылка на программу"
         int training_id FK "Ссылка на тренировку-шаблон"
-        int schedule_id FK "Ссылка на расписание"
-        boolean is_completed "Тренировка завершена"
         int date "Дата проведения"
     }
 
@@ -63,11 +58,6 @@ erDiagram
         int id PK "Идентификатор выполненного упражнения"
         int completed_training_id FK "Ссылка на проведенную тренировку"
         int exercise_id FK "Ссылка на упражнение"
-        int planned_sets "Плановое количество подходов"
-        int planned_reps "Плановое количество повторений"
-        int actual_sets "Фактическое количество подходов"
-        int actual_reps "Фактическое количество повторений"
-        float weight "Использованный вес"
     }
 
     TRAINING ||--o{ TRAINING_EXERCISE : ""

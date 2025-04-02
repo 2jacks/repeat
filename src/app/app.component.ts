@@ -21,7 +21,7 @@ export class AppComponent {
   public isDatabaseInitialized: boolean = false;
   public tabs: ITabItem[] = [
     {
-      label: 'More on Train',
+      label: 'Тренировки',
       icon: 'dumbbell',
       path: 'workout',
       children: [
@@ -43,12 +43,12 @@ export class AppComponent {
       ],
     },
     {
-      label: 'Today',
+      label: 'Главная',
       icon: 'calendar-range',
       path: 'home',
     },
     {
-      label: 'More on Food',
+      label: 'Питание',
       icon: 'apple',
       path: 'food',
     },

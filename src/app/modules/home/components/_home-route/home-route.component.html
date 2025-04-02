@@ -1,3 +1,117 @@
-<ion-content class="ion-padding">
-  <ion-router-outlet></ion-router-outlet>
-</ion-content>
+<tui-loader *ngIf="isLoading()"></tui-loader>
+<ng-container *ngIf="!isLoading()">
+  <div class="header">
+    <div *ngIf="currentState?.activeTrainingProgram">
+      <div class="island current-program-name">
+        Текущая программа:
+        <a
+          tuiLink
+          [routerLink]="[
+            '..',
+            'workout',
+            'training-program',
+            currentState?.activeTrainingProgram?.id,
+            'edit'
+          ]"
+          >{{ currentState!.activeTrainingProgram.name }}</a
+        >
+      </div>
+
+      <div class="program-range">
+        <p class="island">
+          Начало: {{ currentState!.trainingProgramStart | ruDate }}
+        </p>
+        <p class="island">
+          Окончание:
+          {{
+            currentRegistry.getTrainingProgramEndDate(
+              currentState!.trainingProgramStart,
+              currentState!.activeTrainingProgram.durationWeeks
+            ) | ruDate
+          }}
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="!currentState?.activeTrainingProgram">
+      <div class="select-program">
+        <tui-select
+          tuiDropdownMobile
+          [(ngModel)]="trainingProgramToStart"
+          [stringify]="stringifyTrainingProgram"
+        >
+          Выберите программу
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="trainingPrograms"
+            [itemContent]="stringifyTrainingProgram"
+          ></tui-data-list-wrapper>
+        </tui-select>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          [disabled]="!trainingProgramToStart"
+          (click)="onStartTrainingProgramButtonClick()"
+        >
+          Начать
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="calendar">
+    <div
+      *ngIf="!currentState?.activeTrainingProgram"
+      class="no-calendar-placeholder"
+    >
+      Выберите тренировочную программу, чтобы увидеть расписание
+    </div>
+
+    <div class="calendar-wrapper">
+      <tui-calendar [markerHandler]="isTrainingDay"></tui-calendar>
+    </div>
+
+    <div class="today-plans">
+      <div class="today-training">
+        <div *ngIf="!todayTraining()">Сегодня тренировок не запланировано</div>
+        <div *ngIf="todayTraining()" class="island">
+          <div class="today-training-name">{{ todayTraining()?.name }}</div>
+
+          <div class="today-exercises">
+            <div
+              *ngFor="let exercise of todayTraining()?.trainingExercises"
+              class="today-training-exercise"
+            >
+              <span class="name">
+                {{ exercise.exercise.name }}
+              </span>
+
+              <div class="sets-reps">
+                <tui-badge
+                  size="l"
+                  [style.background]="'var(--tui-chart-categorical-10)'"
+                  iconStart="@tui.align-justify"
+                >
+                  {{ exercise.sets }}
+                </tui-badge>
+                <tui-badge
+                  size="l"
+                  [style.background]="'var(--tui-chart-categorical-16)'"
+                  iconStart="@tui.repeat-2"
+                >
+                  {{ exercise.reps }}
+                </tui-badge>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="today-food"></div>
+    </div>
+  </div>
+
+  <div class="go-train">
+    <button tuiButton appearance="primary">Начать тренировку</button>
+  </div>
+</ng-container>

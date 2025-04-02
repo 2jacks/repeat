@@ -102,7 +102,6 @@ export class CreateEditTrainingProgramFormComponent implements OnInit {
       description: program.description,
       durationWeeks: program.durationWeeks,
       goal: program.goal,
-      isActive: program.isActive,
     });
 
     // Добавляем тренировки

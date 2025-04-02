@@ -76,6 +76,16 @@ export class InitialMigration1739812301396 implements MigrationInterface {
       );
     `);
 
+    // Создание таблицы current
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "current" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "active_training_program" INTEGER UNIQUE,
+        "training_program_start" INTEGER,
+        FOREIGN KEY ("active_training_program") REFERENCES "training_program"("id") ON DELETE SET NULL
+      );
+    `);
+
     // Insert MuscleGroups
     await queryRunner.query(
       `INSERT INTO muscle_group (id, name) VALUES
@@ -145,9 +155,15 @@ export class InitialMigration1739812301396 implements MigrationInterface {
         (2, 2, 4);
       `
     );
+
+    // Вставка начальной записи в current
+    await queryRunner.query(`
+      INSERT INTO current (id, active_training_program, training_program_start) VALUES (1, NULL, NULL);
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE IF EXISTS "current"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_program_training"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_program"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_to_exercise"`);

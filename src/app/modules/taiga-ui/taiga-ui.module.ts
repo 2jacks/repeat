@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {
   TuiAppearance,
   TuiButton,
+  TuiCalendar,
   TuiDataList,
   TuiDropdown,
   TuiExpand,
@@ -39,6 +40,7 @@ import {
   TuiTabBar,
 } from '@taiga-ui/addon-mobile';
 import {
+  TuiComboBoxModule,
   TuiMultiSelectModule,
   TuiSelectModule,
   TuiTextareaModule,
@@ -80,6 +82,8 @@ const MODULES = [
   TuiSurface,
   TuiChip,
   TuiInputNumber,
+  TuiComboBoxModule,
+  TuiCalendar,
 ] as any[];
 
 @NgModule({

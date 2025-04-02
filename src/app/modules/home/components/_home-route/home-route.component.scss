@@ -1,0 +1,133 @@
+:host {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep tui-calendar-sheet [data-type="today"]::before {
+    background-color: var(--tui-chart-categorical-09);
+  }
+}
+
+.header {
+  border-bottom: 1px solid #c9c9c9;
+  padding: 4px 0 10px 0;
+
+  .current-program-name {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .program-range {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .select-program {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    tui-select {
+      flex: 1;
+    }
+  }
+}
+
+.calendar {
+  width: 100%;
+  flex: 1 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding-bottom: 10px;
+
+  .no-calendar-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .calendar-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .today {
+    &-plans {
+      width: 100%;
+      flex: 1 0 auto;
+
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    &-training,
+    &-food {
+      border-radius: 10px;
+      height: 100%;
+      width: 50%;
+
+      padding: 4px;
+    }
+    &-training {
+      background-color: var(--tui-status-positive-pale-hover);
+
+      &-name {
+        font-size: 16px;
+        font-weight: 700;
+
+        margin-bottom: 12px;
+      }
+
+      &-exercise {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+
+        .sets-reps {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .name {
+          font-weight: 600;
+        }
+      }
+    }
+
+    &-exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    &-food {
+      background-color: var(--tui-status-info-pale-hover);
+    }
+  }
+}
+
+.go-train {
+  height: 60px;
+
+  border-top: 1px solid #c9c9c9;
+  padding: 10px 0 4px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
