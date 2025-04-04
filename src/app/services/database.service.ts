@@ -12,13 +12,26 @@ import { Training } from '../modules/training/entities/training.entity';
 import { TrainingProgram } from '../modules/training-program/entities/training-program.entity';
 import { TrainingProgramTraining } from '../modules/training-program/entities/training-program-training.entity';
 import { Current } from '../modules/current/entities/current.entity';
+import { Set } from '../modules/exercises/entities/set.entity';
+import { TrainingExerciseSet } from '../modules/exercises/entities/training-exercise-set.entity';
+import { CompletedTraining } from '../modules/training/entities/completed-training.entity';
+import { CompletedExercise } from '../modules/training/entities/completed-exercise.entity';
+import { CompletedExerciseSet } from '../modules/exercises/entities/completed-exercise-set.entity';
 import * as MIGRATIONS from './migrations';
 
 const ENTITIES = [
-  Exercise,
   MuscleGroup,
+
+  Set,
+  CompletedExerciseSet,
+  TrainingExerciseSet,
+
+  Exercise,
   TrainingExercise,
+  CompletedExercise,
+
   Training,
+  CompletedTraining,
   TrainingProgram,
   TrainingProgramTraining,
   Current,

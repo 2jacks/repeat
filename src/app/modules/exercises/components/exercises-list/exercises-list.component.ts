@@ -35,7 +35,7 @@ export class ExercisesListComponent implements OnInit {
   }
 
   public onEditButtonClick(exercise: Exercise) {
-    this._router.navigate([`/exercises/${exercise.id}/edit`]);
+    this._router.navigate([`workout/exercises/${exercise.id}/edit`]);
   }
 
   public onDeleteButtonClick(exercise: Exercise) {

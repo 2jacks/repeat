@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  Relation,
 } from 'typeorm';
 import { MuscleGroup } from '../../muscle-groups/entities/muscle-group.entity';
 import { TrainingExercise } from '../../training/entities/training-exercise.entity';
@@ -26,11 +27,11 @@ export class Exercise {
     joinColumn: { name: 'exercise_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'muscle_group_id', referencedColumnName: 'id' },
   })
-  muscleGroups!: MuscleGroup[];
+  muscleGroups!: Relation<MuscleGroup>[];
 
   @OneToMany(
     () => TrainingExercise,
     (trainingExercise) => trainingExercise.exercise
   )
-  trainingExercises!: TrainingExercise[];
+  trainingExercises!: Relation<TrainingExercise>[];
 }

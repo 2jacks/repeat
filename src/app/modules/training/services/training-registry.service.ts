@@ -25,13 +25,12 @@ export class TrainingRegistryService extends BaseRegistryService {
   public async getAll(): Types.ServiceResult<Training[]> {
     try {
       const res = await this.repository.find({
-        relations: {
-          trainingExercises: {
-            exercise: {
-              muscleGroups: true,
-            },
-          },
-        },
+        relations: [
+          'trainingExercises',
+          'trainingExercises.exercise',
+          'trainingExercises.sets',
+          'trainingExercises.sets.set',
+        ],
       });
 
       this.items.set(res);
@@ -74,7 +73,7 @@ export class TrainingRegistryService extends BaseRegistryService {
         trainingExercise.training = savedTraining;
         trainingExercise.exercise = te.exercise;
         trainingExercise.sets = te.sets;
-        trainingExercise.reps = te.reps;
+
         return trainingExercise;
       });
 
@@ -135,7 +134,6 @@ export class TrainingRegistryService extends BaseRegistryService {
             {
               exercise: updatedTE.exercise,
               sets: updatedTE.sets,
-              reps: updatedTE.reps,
             }
           );
         } else {
@@ -144,7 +142,6 @@ export class TrainingRegistryService extends BaseRegistryService {
             training: currentTraining,
             exercise: updatedTE.exercise,
             sets: updatedTE.sets,
-            reps: updatedTE.reps,
           });
           await trainingExerciseRepo.save(newTE);
         }

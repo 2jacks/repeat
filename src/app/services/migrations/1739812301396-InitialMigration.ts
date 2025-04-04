@@ -46,8 +46,6 @@ export class InitialMigration1739812301396 implements MigrationInterface {
         "id" INTEGER PRIMARY KEY AUTOINCREMENT,
         "training_id" INTEGER NOT NULL,
         "exercise_id" INTEGER NOT NULL,
-        "sets" INTEGER NOT NULL,
-        "reps" INTEGER NOT NULL,
         FOREIGN KEY ("training_id") REFERENCES "training"("id") ON DELETE CASCADE,
         FOREIGN KEY ("exercise_id") REFERENCES "exercise"("id") ON DELETE CASCADE
       );
@@ -83,6 +81,59 @@ export class InitialMigration1739812301396 implements MigrationInterface {
         "active_training_program" INTEGER UNIQUE,
         "training_program_start" INTEGER,
         FOREIGN KEY ("active_training_program") REFERENCES "training_program"("id") ON DELETE SET NULL
+      );
+    `);
+
+    // Создание таблицы set
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "_set" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "number" INTEGER NOT NULL,
+        "reps" INTEGER NOT NULL,
+        "weight" REAL NOT NULL
+      );
+    `);
+
+    // Создание связующей таблицы training_exercise_set
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "training_exercise_set" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "training_exercise_id" INTEGER NOT NULL,
+        "set_id" INTEGER NOT NULL,
+        FOREIGN KEY ("training_exercise_id") REFERENCES "training_to_exercise"("id") ON DELETE CASCADE,
+        FOREIGN KEY ("set_id") REFERENCES "_set"("id") ON DELETE CASCADE
+      );
+    `);
+
+    // Создание таблицы completed_training
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "completed_training" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "training_id" INTEGER NOT NULL,
+        "date" INTEGER NOT NULL,
+        FOREIGN KEY ("training_id") REFERENCES "training"("id") ON DELETE CASCADE
+      );
+    `);
+
+    // Создание таблицы completed_exercise
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "completed_exercise" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "completed_training_id" INTEGER NOT NULL,
+        "exercise_id" INTEGER NOT NULL,
+        FOREIGN KEY ("completed_training_id") REFERENCES "completed_training"("id") ON DELETE CASCADE,
+        FOREIGN KEY ("exercise_id") REFERENCES "exercise"("id") ON DELETE CASCADE
+      );
+    `);
+
+    // Создание связующей таблицы completed_exercise_set
+    await queryRunner.query(`
+      CREATE TABLE IF NOT EXISTS "completed_exercise_set" (
+        "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+        "completed_exercise_id" INTEGER NOT NULL,
+        "set_id" INTEGER NOT NULL,
+        FOREIGN KEY ("completed_exercise_id") REFERENCES "completed_exercise"("id") ON DELETE CASCADE,
+        FOREIGN KEY ("set_id") REFERENCES "_set"("id") ON DELETE CASCADE
       );
     `);
 
@@ -131,10 +182,40 @@ export class InitialMigration1739812301396 implements MigrationInterface {
 
     // Insert TrainingExercises
     await queryRunner.query(
-      `INSERT INTO training_to_exercise (training_id, exercise_id, sets, reps) VALUES
-        (1, 1, 3, 12),
-        (1, 4, 3, 12),
-        (2, 2, 3, 8);
+      `INSERT INTO training_to_exercise (training_id, exercise_id) VALUES
+        (1, 1),
+        (1, 4),
+        (2, 2);
+      `
+    );
+
+    // Insert Sets
+    await queryRunner.query(
+      `INSERT INTO _set (id, number, reps, weight) VALUES
+        (1, 1, 12, 60.0),
+        (2, 2, 12, 65.0),
+        (3, 3, 10, 70.0),
+        (4, 1, 8, 100.0),
+        (5, 2, 8, 105.0),
+        (6, 3, 6, 110.0),
+        (7, 1, 12, 30.0),
+        (8, 2, 12, 32.5),
+        (9, 3, 10, 35.0);
+      `
+    );
+
+    // Insert TrainingExerciseSets
+    await queryRunner.query(
+      `INSERT INTO training_exercise_set (training_exercise_id, set_id) VALUES
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (2, 4),
+        (2, 5),
+        (2, 6),
+        (3, 7),
+        (3, 8),
+        (3, 9);
       `
     );
 
@@ -160,9 +241,49 @@ export class InitialMigration1739812301396 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO current (id, active_training_program, training_program_start) VALUES (1, NULL, NULL);
     `);
+
+    // Вставка примера выполненной тренировки
+    await queryRunner.query(`
+      INSERT INTO completed_training (id, training_id, date) VALUES 
+        (1, 1, ${Date.now()});
+    `);
+
+    // Вставка примера выполненных упражнений
+    await queryRunner.query(`
+      INSERT INTO completed_exercise (id, completed_training_id, exercise_id) VALUES 
+        (1, 1, 1),
+        (2, 1, 4);
+    `);
+
+    // Вставка примеров выполненных подходов
+    await queryRunner.query(`
+      INSERT INTO _set (id, number, reps, weight) VALUES 
+        (10, 1, 12, 62.5),
+        (11, 2, 12, 65.0),
+        (12, 3, 10, 67.5),
+        (13, 1, 12, 32.5),
+        (14, 2, 12, 35.0),
+        (15, 3, 10, 37.5);
+    `);
+
+    // Связывание выполненных подходов с выполненными упражнениями
+    await queryRunner.query(`
+      INSERT INTO completed_exercise_set (completed_exercise_id, set_id) VALUES 
+        (1, 10),
+        (1, 11),
+        (1, 12),
+        (2, 13),
+        (2, 14),
+        (2, 15);
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE IF EXISTS "completed_exercise_set"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "completed_exercise"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "completed_training"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "training_exercise_set"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "_set"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "current"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_program_training"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "training_program"`);

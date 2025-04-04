@@ -52,8 +52,7 @@ export class CreateTrainingFormComponent implements OnInit {
   addExercise() {
     const exerciseForm = this.fb.group({
       exercise: [null, Validators.required],
-      sets: [3, [Validators.required, Validators.min(1)]],
-      reps: [12, [Validators.required, Validators.min(1)]],
+      sets: [new Set(), [Validators.required]],
     });
 
     this.trainingExercises.push(exerciseForm);
@@ -77,7 +76,6 @@ export class CreateTrainingFormComponent implements OnInit {
             const trainingExercise = new TrainingExercise();
             trainingExercise.exercise = te.exercise;
             trainingExercise.sets = te.sets;
-            trainingExercise.reps = te.reps;
             return trainingExercise;
           }
         );

@@ -41,24 +41,38 @@
           <div class="exercises-list">
             <div
               *ngFor="let exercise of training.trainingExercises"
-              class="exercise"
+              class="exercise island"
             >
               {{ exercise.exercise.name }}
               <div class="exercise-info">
-                <tui-badge
-                  size="l"
-                  [style.background]="'var(--tui-chart-categorical-10)'"
-                  iconStart="@tui.align-justify"
-                >
-                  {{ exercise.sets }}
-                </tui-badge>
-                <tui-badge
-                  size="l"
-                  [style.background]="'var(--tui-chart-categorical-16)'"
-                  iconStart="@tui.repeat-2"
-                >
-                  {{ exercise.reps }}
-                </tui-badge>
+                <div class="subtitle">
+                  <tui-icon icon="@tui.align-justify"></tui-icon>
+                  Подходы:
+                </div>
+
+                <div class="sets-list">
+                  <div
+                    *ngFor="let set of exercise.sets; let i = index"
+                    class="set"
+                  >
+                    {{ set.set.number }}.
+                    <tui-badge
+                      size="l"
+                      [style.background]="'var(--tui-chart-categorical-10)'"
+                      iconStart="@tui.repeat-2"
+                    >
+                      {{ set.set.reps }}
+                    </tui-badge>
+
+                    <tui-badge
+                      size="l"
+                      [style.background]="'var(--tui-chart-categorical-12)'"
+                      iconStart="@tui.anvil"
+                    >
+                      {{ set.set.weight }} кг
+                    </tui-badge>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

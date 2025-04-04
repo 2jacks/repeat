@@ -5,9 +5,11 @@ import {
   Column,
   Relation,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Exercise } from '../../exercises/entities/exercise.entity';
 import { Training } from './training.entity';
+import { TrainingExerciseSet } from '../../exercises/entities/training-exercise-set.entity';
 
 @Entity('training_to_exercise')
 export class TrainingExercise {
@@ -22,9 +24,9 @@ export class TrainingExercise {
   @JoinColumn({ name: 'exercise_id' })
   exercise!: Relation<Exercise>;
 
-  @Column()
-  sets!: number;
-
-  @Column()
-  reps!: number;
+  @OneToMany(
+    () => TrainingExerciseSet,
+    (trainingExerciseSet) => trainingExerciseSet.trainingExercise
+  )
+  sets!: Relation<TrainingExerciseSet>[];
 }

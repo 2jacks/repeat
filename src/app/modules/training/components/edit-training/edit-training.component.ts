@@ -66,8 +66,7 @@ export class EditTrainingComponent implements OnInit {
               this.fb.group({
                 id: [te.id],
                 exercise: [te.exercise, Validators.required],
-                sets: [te.sets, [Validators.required, Validators.min(1)]],
-                reps: [te.reps, [Validators.required, Validators.min(1)]],
+                sets: [te.sets, [Validators.required]],
               })
             );
           });
@@ -86,8 +85,7 @@ export class EditTrainingComponent implements OnInit {
     const exerciseForm = this.fb.group({
       id: [null],
       exercise: [null, Validators.required],
-      sets: [3, [Validators.required, Validators.min(1)]],
-      reps: [12, [Validators.required, Validators.min(1)]],
+      sets: [3, [Validators.required]],
     });
 
     this.trainingExercises.push(exerciseForm);
@@ -116,7 +114,6 @@ export class EditTrainingComponent implements OnInit {
 
             trainingExercise.exercise = formTE.exercise;
             trainingExercise.sets = formTE.sets;
-            trainingExercise.reps = formTE.reps;
             return trainingExercise;
           }
         );
