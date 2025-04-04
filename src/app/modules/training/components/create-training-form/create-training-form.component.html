@@ -27,7 +27,7 @@
 
       <div formArrayName="trainingExercises" class="exercises-list">
         <div
-          *ngFor="let exerciseForm of trainingExercises.controls; let i = index"
+          *ngFor="let exerciseForm of exercises.controls; let i = index"
           [formGroupName]="i"
           class="exercise-form"
         >
@@ -40,7 +40,7 @@
                 Упражнение
                 <tui-data-list-wrapper
                   *tuiDataList
-                  [items]="exercises"
+                  [items]="exercisesList"
                   [itemContent]="stringifyExercise | tuiStringifyContent"
                 />
               </tui-select>
@@ -51,23 +51,30 @@
                 appearance="outline-destructive"
                 size="l"
                 iconStart="@tui.trash"
-                [disabled]="trainingExercises.length === 1"
+                [disabled]="exercises.length === 1"
                 (click)="removeExercise(i)"
               ></button>
             </div>
 
-            <div class="exercise-form__numbers">
-              <tui-textfield>
-                <label tuiLabel>Подходы</label>
+            <div class="sets" formArrayName="sets">
+              <div
+                *ngFor="
+                  let set of getSetsFormItems($any(exerciseForm)).controls;
+                  let i = index
+                "
+                [formGroupName]="i"
+              >
+                <tui-textfield>
+                  <label tuiLabel>Повторения</label>
 
-                <input tuiInputNumber formControlName="sets" />
-              </tui-textfield>
+                  <input tuiInputNumber formControlName="reps" />
+                </tui-textfield>
+                <tui-textfield>
+                  <label tuiLabel>Вес (кг)</label>
 
-              <tui-textfield>
-                <label tuiLabel>Повторения</label>
-
-                <input tuiInputNumber formControlName="reps" />
-              </tui-textfield>
+                  <input tuiInputNumber formControlName="weight" />
+                </tui-textfield>
+              </div>
             </div>
           </div>
         </div>

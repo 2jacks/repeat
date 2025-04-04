@@ -15,9 +15,6 @@ export class Training {
   @Column()
   name!: string;
 
-  @OneToMany(
-    () => TrainingExercise,
-    (trainingExercise) => trainingExercise.training
-  )
-  trainingExercises!: Relation<TrainingExercise[]>;
+  @OneToMany(() => TrainingExercise, (exercise) => exercise.training)
+  exercises!: Relation<TrainingExercise[]>;
 }

@@ -1,0 +1,11 @@
+<div *ngIf="!training"><tui-loader></tui-loader></div>
+<div *ngIf="training">
+  <app-training-form
+    [training]="training"
+    title="Редактирование тренировки"
+    submitBtnText="Сохранить"
+    cancelBtnText="Отмена"
+    (onSubmit)="handleSubmit($event)"
+    (onCancel)="handleCancel()"
+  ></app-training-form>
+</div>

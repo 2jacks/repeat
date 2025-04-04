@@ -18,7 +18,7 @@ export class TrainingProgramTraining {
   @JoinColumn({ name: 'program_id' })
   program!: Relation<TrainingProgram>;
 
-  @ManyToOne(() => Training, (training) => training.trainingExercises)
+  @ManyToOne(() => Training, (training) => training.exercises)
   @JoinColumn({ name: 'training_id' })
   training!: Relation<Training>;
 

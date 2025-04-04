@@ -1,0 +1,131 @@
+<form class="form" [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <h5 class="tui-text_h5">{{ title }}</h5>
+
+  <!-- НАЗВАНИЕ ТРЕНИРОВКИ -->
+  <div class="form__row training-name">
+    <tui-textfield>
+      <label tuiLabel>Название тренировки</label>
+
+      <input tuiTextfield formControlName="name" />
+    </tui-textfield>
+  </div>
+
+  <!-- УПРАЖНЕНИЯ -->
+  <div class="exercises">
+    <div class="form__row form__one-line">
+      <h5 class="tui-text_body-xl">Упражнения</h5>
+      <button
+        tuiButton
+        type="button"
+        appearance="secondary"
+        size="s"
+        iconStart="@tui.plus"
+        (click)="addExercise()"
+      >
+        Добавить
+      </button>
+    </div>
+
+    <div class="exercises-list form__nested" formArrayName="exercises">
+      <div
+        *ngFor="let exerciseForm of getExercises().controls; let i = index"
+        [formGroupName]="i"
+        class="exercise-form island form__row"
+      >
+        <div class="exercise-header form__row form__one-line">
+          <tui-select
+            formControlName="exercise"
+            [stringify]="_stringifyExercise"
+          >
+            Упражнение
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="exercisesList"
+              [itemContent]="_stringifyExercise | tuiStringifyContent"
+            />
+          </tui-select>
+
+          <button
+            tuiButton
+            type="button"
+            appearance="outline-destructive"
+            size="l"
+            iconStart="@tui.trash"
+            [disabled]="getExercises().length === 1"
+            (click)="removeExercise(i)"
+          ></button>
+        </div>
+        <div class="sets" formArrayName="sets">
+          <div class="form__row form__one-line">
+            <h6 class="tui-text_h6 tui-text_body-m">Подходы</h6>
+            <button
+              tuiButton
+              type="button"
+              appearance="secondary"
+              size="s"
+              iconStart="@tui.plus"
+              (click)="addSet($any(exerciseForm))"
+            >
+              Добавить
+            </button>
+          </div>
+
+          <div class="sets-list form__nested">
+            <div
+              *ngFor="
+                let set of getSets($any(exerciseForm)).controls;
+                let i = index
+              "
+              [formGroupName]="i"
+            >
+              <div class="form__row form__one-line">
+                <div class="set-number">{{ i + 1 }}.</div>
+                <tui-textfield [style.width.px]="120">
+                  <label tuiLabel>Повторы</label>
+
+                  <input tuiInputNumber formControlName="reps" />
+                </tui-textfield>
+                <tui-textfield>
+                  <label tuiLabel>Вес (кг)</label>
+
+                  <input tuiInputNumber formControlName="weight" />
+                </tui-textfield>
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="outline-destructive"
+                  size="l"
+                  iconStart="@tui.trash"
+                  [disabled]="getSets($any(exerciseForm)).length === 1"
+                  (click)="removeSet($any(exerciseForm), i)"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="form__footer">
+    <button
+      tuiButton
+      type="button"
+      appearance="flat"
+      size="m"
+      class="tui-space_right-3"
+      (click)="handleCancel()"
+    >
+      Отмена
+    </button>
+    <button
+      tuiButton
+      type="submit"
+      appearance="primary"
+      size="m"
+      [disabled]="form.invalid"
+    >
+      Создать
+    </button>
+  </footer>
+</form>

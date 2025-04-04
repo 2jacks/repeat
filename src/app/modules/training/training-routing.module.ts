@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TrainingRouteComponent } from './components/_training-route/training-route.component';
-import { EditTrainingComponent } from './components/edit-training/edit-training.component';
+
+import { TrainingSectionRouteComponent } from './components/_training-section-route/training-section-route.component';
+import { EditTrainingRouteComponent } from './components/_edit-training-route/edit-training-route.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TrainingRouteComponent,
+    component: TrainingSectionRouteComponent,
   },
   {
     path: ':id/edit',
-    component: EditTrainingComponent,
+    component: EditTrainingRouteComponent,
   },
 ];
 

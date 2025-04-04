@@ -16,7 +16,7 @@ export class TrainingExercise {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Training, (training) => training.trainingExercises)
+  @ManyToOne(() => Training, (training) => training.exercises)
   @JoinColumn({ name: 'training_id' })
   training!: Relation<Training>;
 
@@ -26,7 +26,7 @@ export class TrainingExercise {
 
   @OneToMany(
     () => TrainingExerciseSet,
-    (trainingExerciseSet) => trainingExerciseSet.trainingExercise
+    (trainingExerciseSet) => trainingExerciseSet.exercise
   )
   sets!: Relation<TrainingExerciseSet>[];
 }

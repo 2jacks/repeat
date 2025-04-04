@@ -4,6 +4,7 @@ import {
   TuiButton,
   TuiCalendar,
   TuiDataList,
+  TuiDialog,
   TuiDropdown,
   TuiExpand,
   TuiIcon,
@@ -84,6 +85,7 @@ const MODULES = [
   TuiInputNumber,
   TuiComboBoxModule,
   TuiCalendar,
+  TuiDialog,
 ] as any[];
 
 @NgModule({

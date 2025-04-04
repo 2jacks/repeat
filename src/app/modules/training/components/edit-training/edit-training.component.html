@@ -27,7 +27,7 @@
 
       <div formArrayName="trainingExercises" class="exercises-list">
         <div
-          *ngFor="let exerciseForm of trainingExercises.controls; let i = index"
+          *ngFor="let exerciseForm of exercises.controls; let i = index"
           [formGroupName]="i"
           class="exercise-form"
         >
@@ -40,7 +40,7 @@
                 Упражнение
                 <tui-data-list-wrapper
                   *tuiDataList
-                  [items]="exercises"
+                  [items]="exercisesList"
                   [itemContent]="stringifyExercise | tuiStringifyContent"
                 />
               </tui-select>
@@ -51,7 +51,7 @@
                 appearance="outline-destructive"
                 size="l"
                 iconStart="@tui.trash"
-                [disabled]="trainingExercises.length === 1"
+                [disabled]="exercises.length === 1"
                 (click)="removeExercise(i)"
               ></button>
             </div>

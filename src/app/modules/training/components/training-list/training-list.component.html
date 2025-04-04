@@ -40,14 +40,17 @@
         <div class="accordion-content">
           <div class="exercises-list">
             <div
-              *ngFor="let exercise of training.trainingExercises"
+              *ngFor="let exercise of training.exercises"
               class="exercise island"
             >
               {{ exercise.exercise.name }}
               <div class="exercise-info">
                 <div class="subtitle">
-                  <tui-icon icon="@tui.align-justify"></tui-icon>
-                  Подходы:
+                  <tui-icon
+                    icon="@tui.layers"
+                    [style.font-size.px]="18"
+                  ></tui-icon>
+                  Подходы
                 </div>
 
                 <div class="sets-list">

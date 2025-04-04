@@ -1,0 +1,31 @@
+<section class="root">
+  <app-training-list />
+
+  <button
+    tuiButton
+    appearance="accent"
+    class="fab"
+    size="l"
+    (click)="openCreateTrainingDialog()"
+  >
+    <tui-icon icon="@tui.plus"></tui-icon>
+  </button>
+
+  <ng-template
+    #createTrainingFormModal
+    let-observer
+    [tuiDialogOptions]="{ size: 'fullscreen' }"
+    [(tuiDialog)]="isDialogOpen"
+  >
+    <app-training-form
+      style="padding: 50px 0px"
+      (onCancel)="observer.complete()"
+      (onSubmit)="onNewTrainingFormSubmit($event)"
+    ></app-training-form>
+    <!-- <app-create-training-form
+      style="padding: 50px 0px"
+      (afterSubmit)="observer.complete()"
+      (afterCancel)="observer.complete()"
+    ></app-create-training-form> -->
+  </ng-template>
+</section>

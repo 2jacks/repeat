@@ -16,7 +16,7 @@ import { TrainingExercise } from '../../entities/training-exercise.entity';
 })
 export class EditTrainingComponent implements OnInit {
   form: FormGroup;
-  exercises: Exercise[] = [];
+  exercisesList: Exercise[] = [];
   training: Training | null = null;
 
   constructor(
@@ -28,7 +28,7 @@ export class EditTrainingComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      trainingExercises: this.fb.array([]),
+      exercises: this.fb.array([]),
     });
   }
 
@@ -39,7 +39,7 @@ export class EditTrainingComponent implements OnInit {
 
   private async loadExercises() {
     try {
-      this.exercises = await this.exercisesRegistryService.getAll();
+      this.exercisesList = await this.exercisesRegistryService.getAll();
     } catch (error) {
       console.error('Failed to load exercises:', error);
     }
@@ -56,13 +56,13 @@ export class EditTrainingComponent implements OnInit {
           });
 
           // Очищаем существующие упражнения
-          while (this.trainingExercises.length) {
-            this.trainingExercises.removeAt(0);
+          while (this.exercises.length) {
+            this.exercises.removeAt(0);
           }
 
           // Добавляем существующие упражнения
-          this.training.trainingExercises.forEach((te) => {
-            this.trainingExercises.push(
+          this.training.exercises.forEach((te) => {
+            this.exercises.push(
               this.fb.group({
                 id: [te.id],
                 exercise: [te.exercise, Validators.required],
@@ -77,8 +77,8 @@ export class EditTrainingComponent implements OnInit {
     }
   }
 
-  get trainingExercises() {
-    return this.form.get('trainingExercises') as FormArray;
+  get exercises() {
+    return this.form.get('exercises') as FormArray;
   }
 
   addExercise() {
@@ -88,12 +88,12 @@ export class EditTrainingComponent implements OnInit {
       sets: [3, [Validators.required]],
     });
 
-    this.trainingExercises.push(exerciseForm);
+    this.exercises.push(exerciseForm);
   }
 
   removeExercise(index: number) {
-    if (this.trainingExercises.length > 1) {
-      this.trainingExercises.removeAt(index);
+    if (this.exercises.length > 1) {
+      this.exercises.removeAt(index);
     }
   }
 
@@ -104,19 +104,16 @@ export class EditTrainingComponent implements OnInit {
         this.training.name = formValue.name;
 
         // Обновляем существующие упражнения и добавляем новые
-        this.training.trainingExercises = formValue.trainingExercises.map(
-          (formTE: any) => {
-            const trainingExercise = formTE.id
-              ? this.training!.trainingExercises.find(
-                  (te) => te.id === formTE.id
-                ) || new TrainingExercise()
-              : new TrainingExercise();
+        this.training.exercises = formValue.exercises.map((formTE: any) => {
+          const trainingExercise = formTE.id
+            ? this.training!.exercises.find((te) => te.id === formTE.id) ||
+              new TrainingExercise()
+            : new TrainingExercise();
 
-            trainingExercise.exercise = formTE.exercise;
-            trainingExercise.sets = formTE.sets;
-            return trainingExercise;
-          }
-        );
+          trainingExercise.exercise = formTE.exercise;
+          trainingExercise.sets = formTE.sets;
+          return trainingExercise;
+        });
 
         await this.trainingRegistryService.update(this.training);
         this.location.back();

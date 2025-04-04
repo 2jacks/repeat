@@ -4,30 +4,36 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TrainingRoutingModule } from './training-routing.module';
 import { TrainingRegistryService } from './services/training-registry.service';
-import { TrainingRouteComponent } from './components/_training-route/training-route.component';
+import { TrainingSectionRouteComponent } from './components/_training-section-route/training-section-route.component';
 
 import { TrainingListComponent } from './components/training-list/training-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { EditTrainingComponent } from './components/edit-training/edit-training.component';
 import { CreateTrainingFormComponent } from './components/create-training-form/create-training-form.component';
 import { ExercisesModule } from '../exercises/exercises.module';
-import { TaigaUiModule } from '../taiga-ui/taiga-ui.module';
+import { TrainingFormComponent } from './components/training-form/training-form.component';
+import { EditTrainingRouteComponent } from './components/_edit-training-route/edit-training-route.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    TrainingRouteComponent,
+    TrainingSectionRouteComponent,
     TrainingListComponent,
     EditTrainingComponent,
     CreateTrainingFormComponent,
+    TrainingFormComponent,
+    EditTrainingRouteComponent,
   ],
   imports: [
+    TrainingRoutingModule,
+
     CommonModule,
     FormsModule,
     IonicModule,
-    TrainingRoutingModule,
+
+    SharedModule,
 
     ExercisesModule,
-    SharedModule,
   ],
   providers: [TrainingRegistryService],
 })

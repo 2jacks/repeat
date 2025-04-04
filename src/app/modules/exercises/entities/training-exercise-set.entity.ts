@@ -19,7 +19,7 @@ export class TrainingExerciseSet {
     (trainingExercise) => trainingExercise.sets
   )
   @JoinColumn({ name: 'training_exercise_id' })
-  trainingExercise!: Relation<TrainingExercise>;
+  exercise!: Relation<TrainingExercise>;
 
   @OneToOne(() => Set)
   @JoinColumn({ name: 'set_id' })

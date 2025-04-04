@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { Environment } from 'src/app/environment';
 import { Types } from '../../shared/utils/utils';
 import { TrainingExercise } from '../entities/training-exercise.entity';
+import { Set } from '../../exercises/entities/set.entity';
+import { TrainingExerciseSet } from '../../exercises/entities/training-exercise-set.entity';
 
 @Injectable()
 export class TrainingRegistryService extends BaseRegistryService {
@@ -25,12 +27,23 @@ export class TrainingRegistryService extends BaseRegistryService {
   public async getAll(): Types.ServiceResult<Training[]> {
     try {
       const res = await this.repository.find({
-        relations: [
-          'trainingExercises',
-          'trainingExercises.exercise',
-          'trainingExercises.sets',
-          'trainingExercises.sets.set',
-        ],
+        relations: {
+          exercises: {
+            exercise: true,
+            sets: {
+              set: true,
+            },
+          },
+        },
+        order: {
+          exercises: {
+            sets: {
+              set: {
+                number: 'ASC',
+              },
+            },
+          },
+        },
       });
 
       this.items.set(res);
@@ -45,9 +58,12 @@ export class TrainingRegistryService extends BaseRegistryService {
       const res = await this.repository.findOne({
         where: { id: id },
         relations: {
-          trainingExercises: {
+          exercises: {
             exercise: {
               muscleGroups: true,
+            },
+            sets: {
+              set: true,
             },
           },
         },
@@ -67,19 +83,43 @@ export class TrainingRegistryService extends BaseRegistryService {
       });
       const savedTraining = await this.repository.save(training);
 
-      // Теперь создаем записи в промежуточной таблице
-      const exercises = newItem.trainingExercises.map((te) => {
-        const trainingExercise = new TrainingExercise();
-        trainingExercise.training = savedTraining;
-        trainingExercise.exercise = te.exercise;
-        trainingExercise.sets = te.sets;
+      // Создаем упражнения и подходы
+      for (const te of newItem.exercises) {
+        // Создаем запись в таблице training_to_exercise
+        const trainingExercise = this.dataSource
+          .getRepository(TrainingExercise)
+          .create({
+            training: savedTraining,
+            exercise: te.exercise,
+          });
+        const savedTrainingExercise = await this.dataSource
+          .getRepository(TrainingExercise)
+          .save(trainingExercise);
 
-        return trainingExercise;
-      });
+        // Создаем подходы и связываем их с упражнением
+        for (const set of te.sets) {
+          // Создаем запись в таблице set
+          const newSet = this.dataSource.getRepository(Set).create({
+            number: set.set.number,
+            reps: set.set.reps,
+            weight: set.set.weight,
+          });
+          const savedSet = await this.dataSource
+            .getRepository(Set)
+            .save(newSet);
 
-      await this._dbService.dataSource
-        .getRepository(TrainingExercise)
-        .save(exercises);
+          // Создаем связь между подходом и упражнением
+          const exerciseset = this.dataSource
+            .getRepository(TrainingExerciseSet)
+            .create({
+              exercise: savedTrainingExercise,
+              set: savedSet,
+            });
+          await this.dataSource
+            .getRepository(TrainingExerciseSet)
+            .save(exerciseset);
+        }
+      }
 
       await this._saveDataIfWeb();
       await this.getAll();
@@ -96,8 +136,11 @@ export class TrainingRegistryService extends BaseRegistryService {
       const currentTraining = await this.repository.findOne({
         where: { id: updatedItem.id },
         relations: {
-          trainingExercises: {
+          exercises: {
             exercise: true,
+            sets: {
+              set: true,
+            },
           },
         },
       });
@@ -112,11 +155,14 @@ export class TrainingRegistryService extends BaseRegistryService {
 
       const trainingExerciseRepo =
         this._dbService.dataSource.getRepository(TrainingExercise);
+      const setRepo = this._dbService.dataSource.getRepository(Set);
+      const exercisesetRepo =
+        this._dbService.dataSource.getRepository(TrainingExerciseSet);
 
       // Удаляем упражнения, которых больше нет в обновленной версии
-      const exercisesToDelete = currentTraining.trainingExercises.filter(
+      const exercisesToDelete = currentTraining.exercises.filter(
         (currentTE) =>
-          !updatedItem.trainingExercises.some(
+          !updatedItem.exercises.some(
             (updatedTE) => updatedTE.id === currentTE.id
           )
       );
@@ -126,24 +172,60 @@ export class TrainingRegistryService extends BaseRegistryService {
       }
 
       // Обновляем существующие и создаем новые упражнения
-      for (const updatedTE of updatedItem.trainingExercises) {
+      for (const updatedTE of updatedItem.exercises) {
         if (updatedTE.id) {
           // Обновляем существующее упражнение
           await trainingExerciseRepo.update(
             { id: updatedTE.id },
             {
               exercise: updatedTE.exercise,
-              sets: updatedTE.sets,
             }
           );
+
+          // Удаляем старые подходы
+          const oldSets = await exercisesetRepo.find({
+            where: { exercise: { id: updatedTE.id } },
+          });
+          await exercisesetRepo.remove(oldSets);
+
+          // Создаем новые подходы
+          for (const set of updatedTE.sets) {
+            const newSet = setRepo.create({
+              number: set.set.number,
+              reps: set.set.reps,
+              weight: set.set.weight,
+            });
+            const savedSet = await setRepo.save(newSet);
+
+            const exerciseset = exercisesetRepo.create({
+              exercise: { id: updatedTE.id },
+              set: savedSet,
+            });
+            await exercisesetRepo.save(exerciseset);
+          }
         } else {
           // Создаем новое упражнение
           const newTE = trainingExerciseRepo.create({
             training: currentTraining,
             exercise: updatedTE.exercise,
-            sets: updatedTE.sets,
           });
-          await trainingExerciseRepo.save(newTE);
+          const savedTE = await trainingExerciseRepo.save(newTE);
+
+          // Создаем подходы для нового упражнения
+          for (const set of updatedTE.sets) {
+            const newSet = setRepo.create({
+              number: set.set.number,
+              reps: set.set.reps,
+              weight: set.set.weight,
+            });
+            const savedSet = await setRepo.save(newSet);
+
+            const exerciseset = exercisesetRepo.create({
+              exercise: savedTE,
+              set: savedSet,
+            });
+            await exercisesetRepo.save(exerciseset);
+          }
         }
       }
 
