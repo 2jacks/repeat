@@ -6,3 +6,11 @@
   width: 20px;
   flex-shrink: 0;
 }
+
+.exercise-form {
+  padding: 0;
+
+  ::ng-deep.t-header {
+    padding: 2px 1.25rem !important;
+  }
+}

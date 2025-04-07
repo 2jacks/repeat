@@ -175,12 +175,15 @@ export class TrainingRegistryService extends BaseRegistryService {
       for (const updatedTE of updatedItem.exercises) {
         if (updatedTE.id) {
           // Обновляем существующее упражнение
-          await trainingExerciseRepo.update(
-            { id: updatedTE.id },
-            {
-              exercise: updatedTE.exercise,
-            }
-          );
+          const existingTE = await trainingExerciseRepo.findOne({
+            where: { id: updatedTE.id },
+          });
+
+          if (existingTE) {
+            existingTE.exercise = updatedTE.exercise;
+            existingTE.training = currentTraining;
+            await trainingExerciseRepo.save(existingTE);
+          }
 
           // Удаляем старые подходы
           const oldSets = await exercisesetRepo.find({

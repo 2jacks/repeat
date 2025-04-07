@@ -28,8 +28,8 @@ export class CurrentRegistryService extends BaseRegistryService {
           'activeTrainingProgram',
           'activeTrainingProgram.trainings',
           'activeTrainingProgram.trainings.training',
-          'activeTrainingProgram.trainings.training.trainingExercises',
-          'activeTrainingProgram.trainings.training.trainingExercises.exercise',
+          'activeTrainingProgram.trainings.training.exercises',
+          'activeTrainingProgram.trainings.training.exercises.exercise',
         ],
       });
 

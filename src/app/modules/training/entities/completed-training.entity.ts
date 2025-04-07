@@ -27,5 +27,5 @@ export class CompletedTraining {
     () => CompletedExercise,
     (completedExercise) => completedExercise.completedTraining
   )
-  completedExercises!: Relation<CompletedExercise>[];
+  exercises!: Relation<CompletedExercise>[];
 }

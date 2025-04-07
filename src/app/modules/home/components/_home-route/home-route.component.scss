@@ -68,11 +68,14 @@
   .today {
     &-plans {
       width: 100%;
+      height: 220px;
       flex: 1 0 auto;
 
       display: flex;
       align-items: center;
       gap: 4px;
+
+      overflow-y: auto;
     }
     &-training,
     &-food {
@@ -81,6 +84,8 @@
       width: 50%;
 
       padding: 4px;
+
+      overflow-y: auto;
     }
     &-training {
       background-color: var(--tui-status-positive-pale-hover);
@@ -130,4 +135,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.start-training-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
 }

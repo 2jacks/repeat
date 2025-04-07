@@ -1,10 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="program-form">
-  <h2 class="tui-text_h3 title" *ngIf="!isEditMode">
-    Создание тренировочного плана
-  </h2>
-  <h2 class="tui-text_h3 title" *ngIf="isEditMode">
+  <h5 class="tui-text_h5" *ngIf="!isEditMode">Создание тренировочного плана</h5>
+  <h5 class="tui-text_h5" *ngIf="isEditMode">
     Редактирование тренировочного плана
-  </h2>
+  </h5>
   <div class="tui-form__row">
     <tui-textfield>
       <label tuiLabel>Название</label>
@@ -60,7 +58,7 @@
     <div
       *ngFor="let training of trainingsFormArray.controls; let i = index"
       [formGroupName]="i"
-      class="training-item"
+      class="training-item island"
     >
       <div class="training-item__content">
         <div class="training-item__header">

@@ -18,6 +18,7 @@ export class TrainingFormComponent implements OnInit {
   @Input() title: string = 'Тренировка';
   @Input() submitBtnText: string = 'Сохранить';
   @Input() cancelBtnText: string = 'Отмена';
+  @Input() isNameFieldHidden: boolean = false;
 
   @Output() onSubmit = new EventEmitter<Training>();
   @Output() onCancel = new EventEmitter<void>();
@@ -129,7 +130,7 @@ export class TrainingFormComponent implements OnInit {
   async handleSubmit() {
     if (this.form.valid) {
       const formValue = this.form.value;
-      const training = new Training();
+      const training = this.training ?? new Training();
       training.name = formValue.name;
 
       training.exercises = formValue.exercises.map((te: any) => {

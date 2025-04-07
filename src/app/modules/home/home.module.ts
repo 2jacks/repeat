@@ -11,7 +11,7 @@ import { CurrentModule } from '../current/current.module';
 import { TrainingProgramModule } from '../training-program/training-program.module';
 import { TUI_DAY_TYPE_HANDLER } from '@taiga-ui/core';
 import { TuiDay } from '@taiga-ui/cdk';
-
+import { TrainingModule } from '../training/training.module';
 function today(day: TuiDay) {
   const currentDay = TuiDay.currentLocal();
   if (currentDay.daySame(day)) {
@@ -26,6 +26,7 @@ function today(day: TuiDay) {
     SharedModule,
     HomeRoutingModule,
     CurrentModule,
+    TrainingModule,
     TrainingProgramModule,
   ],
   declarations: [

@@ -2,7 +2,7 @@
 <ng-container *ngIf="!isLoading()">
   <div class="header">
     <div *ngIf="currentState?.activeTrainingProgram">
-      <div class="island current-program-name">
+      <div class="flat-area current-program-name">
         Текущая программа:
         <a
           tuiLink
@@ -18,10 +18,10 @@
       </div>
 
       <div class="program-range">
-        <p class="island">
+        <p class="flat-area">
           Начало: {{ currentState!.trainingProgramStart | ruDate }}
         </p>
-        <p class="island">
+        <p class="flat-area">
           Окончание:
           {{
             currentRegistry.getTrainingProgramEndDate(
@@ -91,17 +91,10 @@
                 <tui-badge
                   size="l"
                   [style.background]="'var(--tui-chart-categorical-10)'"
-                  iconStart="@tui.align-justify"
+                  iconStart="@tui.layers"
                 >
-                  {{ exercise.sets }}
+                  {{ exercise.sets.length }}
                 </tui-badge>
-                <!-- <tui-badge
-                  size="l"
-                  [style.background]="'var(--tui-chart-categorical-16)'"
-                  iconStart="@tui.repeat-2"
-                >
-                  {{ exercise.reps }}
-                </tui-badge> -->
               </div>
             </div>
           </div>
@@ -112,6 +105,55 @@
   </div>
 
   <div class="go-train">
-    <button tuiButton appearance="primary">Начать тренировку</button>
+    <ng-container *ngIf="todayTraining()">
+      <button
+        tuiButton
+        appearance="primary"
+        (click)="showStartTrainingModal(startTrainingModal)"
+      >
+        Начать тренировку
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!todayTraining()">
+      <button
+        tuiButton
+        appearance="primary"
+        (click)="openTodayTrainingModal(todayTrainingModal)"
+      >
+        Начать тренировку
+      </button>
+    </ng-container>
   </div>
 </ng-container>
+
+<ng-template #startTrainingModal let-observer>
+  <div class="start-training-modal">
+    <div class="actions">
+      <button
+        tuiButton
+        appearance="primary"
+        (click)="openTodayTrainingModal(todayTrainingModal, todayTraining()!)"
+      >
+        {{ todayTraining()!.name }}
+      </button>
+      или
+      <button
+        tuiButton
+        appearance="secondary"
+        (click)="openTodayTrainingModal(todayTrainingModal)"
+      >
+        Новая тренировка
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #todayTrainingModal let-observer>
+  <app-training-form
+    [training]="trainingTemplate()"
+    [isNameFieldHidden]="isTodayTrainingNameFieldHidden"
+    [title]="todayTrainingModalTitle"
+    (onSubmit)="onCompletedTrainingSubmit($event)"
+    (onCancel)="observer.complete()"
+  ></app-training-form>
+</ng-template>

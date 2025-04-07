@@ -4,9 +4,11 @@ import { Current } from '../../../current/entities/current.entity';
 import { TrainingProgramRegistryService } from '../../../training-program/services/training-program-registry.service';
 import { TrainingProgram } from '../../../training-program/entities/training-program.entity';
 import { TuiDay } from '@taiga-ui/cdk';
-import { TuiMarkerHandler } from '@taiga-ui/core';
+import { TuiDialogContext, TuiMarkerHandler } from '@taiga-ui/core';
 import { Training } from '../../../training/entities/training.entity';
 import { TrainingRegistryService } from '../../../training/services/training-registry.service';
+import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
+import { TuiDialogService } from '@taiga-ui/core';
 
 const ONE_DOT: [string] = ['var(--tui-status-positive)'];
 
@@ -21,13 +23,18 @@ export class HomeRouteComponent implements OnInit {
   trainingPrograms: TrainingProgram[] = [];
   trainingProgramToStart: TrainingProgram | null = null;
   todayTraining = signal<Training | null>(null);
+  isTodayTrainingNameFieldHidden: boolean = true;
+  todayTrainingModalTitle: string = 'Тренировка';
+
+  trainingTemplate = signal<Training | undefined>(undefined);
 
   isLoading = signal<boolean>(true);
 
   constructor(
     public currentRegistry: CurrentRegistryService,
     private trainingProgramRegistry: TrainingProgramRegistryService,
-    private trainingRegistry: TrainingRegistryService
+    private trainingRegistry: TrainingRegistryService,
+    private dialogs: TuiDialogService
   ) {}
 
   async ngOnInit() {
@@ -145,4 +152,31 @@ export class HomeRouteComponent implements OnInit {
       ? ONE_DOT
       : [];
   };
+
+  showStartTrainingModal(content: PolymorpheusContent<TuiDialogContext>) {
+    this.dialogs
+      .open(content, {
+        closeable: false,
+      })
+      .subscribe();
+  }
+
+  openTodayTrainingModal(
+    content: PolymorpheusContent<TuiDialogContext>,
+    training?: Training
+  ) {
+    this.trainingTemplate.set(training);
+    this.todayTrainingModalTitle =
+      this.trainingTemplate()?.name || 'Тренировка';
+    this.dialogs
+      .open(content, {
+        size: 'fullscreen',
+      })
+      .subscribe();
+  }
+
+  onCompletedTrainingSubmit(training: Training) {
+    console.log(training);
+    console.log(this.trainingTemplate());
+  }
 }

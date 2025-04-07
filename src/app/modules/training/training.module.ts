@@ -8,22 +8,19 @@ import { TrainingSectionRouteComponent } from './components/_training-section-ro
 
 import { TrainingListComponent } from './components/training-list/training-list.component';
 import { SharedModule } from '../shared/shared.module';
-import { EditTrainingComponent } from './components/edit-training/edit-training.component';
-import { CreateTrainingFormComponent } from './components/create-training-form/create-training-form.component';
+
 import { ExercisesModule } from '../exercises/exercises.module';
 import { TrainingFormComponent } from './components/training-form/training-form.component';
 import { EditTrainingRouteComponent } from './components/_edit-training-route/edit-training-route.component';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     TrainingSectionRouteComponent,
     TrainingListComponent,
-    EditTrainingComponent,
-    CreateTrainingFormComponent,
     TrainingFormComponent,
     EditTrainingRouteComponent,
   ],
+  exports: [TrainingFormComponent],
   imports: [
     TrainingRoutingModule,
 
