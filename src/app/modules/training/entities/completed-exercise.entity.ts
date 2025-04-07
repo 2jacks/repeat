@@ -22,7 +22,7 @@ export class CompletedExercise {
 
   @ManyToOne(
     () => CompletedTraining,
-    (completedTraining) => completedTraining.completedExercises
+    (completedTraining) => completedTraining.exercises
   )
   @JoinColumn({ name: 'completed_training_id' })
   completedTraining!: Relation<CompletedTraining>;
