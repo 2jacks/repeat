@@ -1,0 +1,13 @@
+.title {
+  margin-bottom: 20px;
+}
+
+.trainings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .tui-text_h6 {
+    font-size: 16px !important;
+  }
+}

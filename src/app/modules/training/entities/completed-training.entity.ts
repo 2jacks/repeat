@@ -16,7 +16,7 @@ export class CompletedTraining {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @OneToOne(() => Training)
+  @OneToOne(() => Training, { nullable: true })
   @JoinColumn({ name: 'training_id' })
   training!: Relation<Training>;
 

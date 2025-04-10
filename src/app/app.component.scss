@@ -33,6 +33,14 @@ tui-root[data-platform="android"] .root {
   z-index: 1;
 }
 
-.dropdown-menu__item {
-  justify-content: start;
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 4px;
+
+  &-item {
+    justify-content: start;
+  }
 }

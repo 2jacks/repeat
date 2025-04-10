@@ -106,41 +106,40 @@
 
   <div class="go-train">
     <ng-container *ngIf="todayTraining()">
-      <button
-        tuiButton
-        appearance="primary"
-        (click)="showStartTrainingModal(startTrainingModal)"
-      >
+      <button tuiButton appearance="primary" (click)="showStartTrainingModal()">
         Начать тренировку
       </button>
     </ng-container>
     <ng-container *ngIf="!todayTraining()">
-      <button
-        tuiButton
-        appearance="primary"
-        (click)="openTodayTrainingModal(todayTrainingModal)"
-      >
+      <button tuiButton appearance="primary" (click)="openTodayTrainingModal()">
         Начать тренировку
       </button>
     </ng-container>
   </div>
 </ng-container>
 
-<ng-template #startTrainingModal let-observer>
+<ng-template
+  #startTrainingModal
+  let-observer
+  [(tuiDialog)]="isStartTrainingModalOpen"
+  [tuiDialogOptions]="{ closeable: false }"
+>
   <div class="start-training-modal">
     <div class="actions">
-      <button
-        tuiButton
-        appearance="primary"
-        (click)="openTodayTrainingModal(todayTrainingModal, todayTraining()!)"
-      >
-        {{ todayTraining()!.name }}
-      </button>
-      или
+      <ng-container *ngIf="todayTraining()">
+        <button
+          tuiButton
+          appearance="primary"
+          (click)="openTodayTrainingModal(todayTraining()!)"
+        >
+          {{ todayTraining()!.name }}
+        </button>
+        или
+      </ng-container>
       <button
         tuiButton
         appearance="secondary"
-        (click)="openTodayTrainingModal(todayTrainingModal)"
+        (click)="openTodayTrainingModal()"
       >
         Новая тренировка
       </button>
@@ -148,12 +147,19 @@
   </div>
 </ng-template>
 
-<ng-template #todayTrainingModal let-observer>
+<ng-template
+  #todayTrainingModal
+  let-observer
+  [(tuiDialog)]="isTodayTrainingModalOpen"
+  [tuiDialogOptions]="{ size: 'fullscreen', closeable: false }"
+>
   <app-training-form
     [training]="trainingTemplate()"
     [isNameFieldHidden]="isTodayTrainingNameFieldHidden"
     [title]="todayTrainingModalTitle"
     (onSubmit)="onCompletedTrainingSubmit($event)"
-    (onCancel)="observer.complete()"
+    (onCancel)="closeTodayTrainingModal()"
+    [submitBtnText]="'Завершить'"
+    [cancelBtnText]="'Отменить'"
   ></app-training-form>
 </ng-template>

@@ -5,6 +5,10 @@ import { CompletedTraining } from '../entities/completed-training.entity';
 import { Repository } from 'typeorm';
 import { Environment } from 'src/app/environment';
 import { Types } from '../../shared/utils/utils';
+import { Training } from '../entities/training.entity';
+import { CompletedExercise } from '../entities/completed-exercise.entity';
+import { CompletedExerciseSet } from '../../exercises/entities/completed-exercise-set.entity';
+import { Set } from '../../exercises/entities/set.entity';
 
 @Injectable()
 export class CompletedRegistryService extends BaseRegistryService {
@@ -26,7 +30,12 @@ export class CompletedRegistryService extends BaseRegistryService {
       const res = await this.repository.find({
         relations: {
           training: true,
-          exercises: true,
+          exercises: {
+            exercise: true,
+            sets: {
+              set: true,
+            },
+          },
         },
         order: {
           date: 'DESC',
@@ -59,13 +68,55 @@ export class CompletedRegistryService extends BaseRegistryService {
   }
 
   public async create(
-    newItem: CompletedTraining
+    completedTraining: CompletedTraining
   ): Types.ServiceResult<CompletedTraining> {
     try {
-      const completedTraining = this.repository.create(newItem);
+      // Создаем запись о завершенной тренировке
+      const newCompletedTraining = this.repository.create({
+        training: completedTraining.training,
+        date: completedTraining.date,
+      });
       const savedCompletedTraining = await this.repository.save(
-        completedTraining
+        newCompletedTraining
       );
+
+      // Создаем упражнения и подходы
+      for (const exercise of completedTraining.exercises) {
+        // Создаем запись о завершенном упражнении
+        const completedExercise = this.dataSource
+          .getRepository(CompletedExercise)
+          .create({
+            completedTraining: savedCompletedTraining,
+            exercise: exercise.exercise,
+          });
+        const savedCompletedExercise = await this.dataSource
+          .getRepository(CompletedExercise)
+          .save(completedExercise);
+
+        // Создаем подходы и связываем их с упражнением
+        for (const set of exercise.sets) {
+          // Создаем запись о подходе
+          const newSet = this.dataSource.getRepository(Set).create({
+            number: set.set.number,
+            reps: set.set.reps,
+            weight: set.set.weight,
+          });
+          const savedSet = await this.dataSource
+            .getRepository(Set)
+            .save(newSet);
+
+          // Создаем связь между подходом и упражнением
+          const completedExerciseSet = this.dataSource
+            .getRepository(CompletedExerciseSet)
+            .create({
+              completedExercise: savedCompletedExercise,
+              set: savedSet,
+            });
+          await this.dataSource
+            .getRepository(CompletedExerciseSet)
+            .save(completedExerciseSet);
+        }
+      }
 
       await this._saveDataIfWeb();
       await this.getAll();

@@ -3,9 +3,9 @@
     *ngFor="let exercise of exercises()"
     [style.--t-actions-width]="136"
   >
-    <div tuiAppearance="floating" tuiCardLarge class="card">
-      <header tuiHeader>
-        <h2 tuiTitle>{{ exercise.name }}</h2>
+    <div class="island exercise-item">
+      <header>
+        <h6 class="tui-text_h6">{{ exercise.name }}</h6>
         <aside tuiAccessories>
           <tui-badge appearance="neutral" size="l">
             <app-muscle-group-icon
@@ -16,7 +16,7 @@
         </aside>
       </header>
 
-      <section>{{ exercise.description }}</section>
+      <p>{{ exercise.description }}</p>
     </div>
 
     <button

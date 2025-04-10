@@ -6,7 +6,6 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeRouteComponent } from './components/_home-route/home-route.component';
 import { TrainingRouteComponent } from './components/_training-route/training-route.component';
 import { FoodRouteComponent } from './components/_food-route/food-route.component';
-import { CurrentRegistryService } from '../current/services/current-registry.service';
 import { CurrentModule } from '../current/current.module';
 import { TrainingProgramModule } from '../training-program/training-program.module';
 import { TUI_DAY_TYPE_HANDLER } from '@taiga-ui/core';
@@ -25,6 +24,7 @@ function today(day: TuiDay) {
   imports: [
     SharedModule,
     HomeRoutingModule,
+    SharedModule,
     CurrentModule,
     TrainingModule,
     TrainingProgramModule,

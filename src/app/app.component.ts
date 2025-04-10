@@ -48,9 +48,9 @@ export class AppComponent {
       path: 'home',
     },
     {
-      label: 'Питание',
-      icon: 'apple',
-      path: 'food',
+      label: 'Статистика',
+      icon: 'chart-no-axes-combined',
+      path: 'statistics',
     },
   ];
   public activeItemIndex: number = this.getActiveTabIndex();

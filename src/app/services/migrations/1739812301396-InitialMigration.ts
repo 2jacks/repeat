@@ -109,7 +109,7 @@ export class InitialMigration1739812301396 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TABLE IF NOT EXISTS "completed_training" (
         "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-        "training_id" INTEGER NOT NULL,
+        "training_id" INTEGER,
         "date" INTEGER NOT NULL,
         FOREIGN KEY ("training_id") REFERENCES "training"("id") ON DELETE CASCADE
       );

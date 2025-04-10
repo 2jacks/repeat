@@ -31,7 +31,7 @@ export class TrainingFormComponent implements OnInit {
     private exercisesRegistryService: ExercisesRegistryService
   ) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: [''],
       exercises: this.fb.array([]),
     });
   }

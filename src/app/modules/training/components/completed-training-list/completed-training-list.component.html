@@ -1,0 +1,27 @@
+<div class="completed-trainings-container">
+  <h5 class="tui-text_h5 title">Завершенные тренировки</h5>
+
+  <div *ngIf="completedTrainings.length === 0" class="no-trainings">
+    <p>У вас пока нет завершенных тренировок</p>
+  </div>
+
+  <div class="trainings-list">
+    <div
+      *ngFor="let training of completedTrainings"
+      class="training-card island"
+    >
+      <div class="training-header">
+        <h6 class="tui-text_h6">
+          {{ training.training?.name || "Тренировка" }}
+        </h6>
+        <span class="date">{{ training.date | date : "dd.MM.yyyy" }}</span>
+      </div>
+
+      <div class="training-info">
+        <div class="exercises-count">
+          <span>Упражнений: {{ getTotalExercises(training) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

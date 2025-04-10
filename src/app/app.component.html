@@ -42,22 +42,20 @@
               {{ tab.label }}
             </button>
             <ng-template #dropdownContent>
-              <tui-data-list role="menu">
-                <tui-opt-group>
-                  <button
-                    *ngFor="let child of tab.children"
-                    #rla="routerLinkActive"
-                    routerLinkActive
-                    [routerLink]="[tab.path, child.path]"
-                    iconStart="@tui.{{ child.icon }}"
-                    [appearance]="rla.isActive ? 'outline' : 'flat'"
-                    tuiButton
-                    class="dropdown-menu__item"
-                  >
-                    {{ child.label }}
-                  </button>
-                </tui-opt-group>
-              </tui-data-list>
+              <div class="dropdown-menu">
+                <button
+                  *ngFor="let child of tab.children"
+                  #rla="routerLinkActive"
+                  routerLinkActive
+                  [routerLink]="[tab.path, child.path]"
+                  iconStart="@tui.{{ child.icon }}"
+                  [appearance]="rla.isActive ? 'outline' : 'flat'"
+                  tuiButton
+                  class="dropdown-menu-item"
+                >
+                  {{ child.label }}
+                </button>
+              </div>
             </ng-template>
           </ng-container>
         </ng-container>

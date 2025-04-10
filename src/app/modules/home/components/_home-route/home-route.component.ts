@@ -9,6 +9,10 @@ import { Training } from '../../../training/entities/training.entity';
 import { TrainingRegistryService } from '../../../training/services/training-registry.service';
 import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { TuiDialogService } from '@taiga-ui/core';
+import { CompletedTraining } from '../../../training/entities/completed-training.entity';
+import { CompletedRegistryService } from '../../../training/services/completed-training-registry.service';
+import { CompletedExercise } from '../../../training/entities/completed-exercise.entity';
+import { CompletedExerciseSet } from '../../../exercises/entities/completed-exercise-set.entity';
 
 const ONE_DOT: [string] = ['var(--tui-status-positive)'];
 
@@ -21,20 +25,27 @@ const ONE_DOT: [string] = ['var(--tui-status-positive)'];
 export class HomeRouteComponent implements OnInit {
   currentState: Current | null = null;
   trainingPrograms: TrainingProgram[] = [];
+
   trainingProgramToStart: TrainingProgram | null = null;
+
   todayTraining = signal<Training | null>(null);
   isTodayTrainingNameFieldHidden: boolean = true;
   todayTrainingModalTitle: string = 'Тренировка';
 
   trainingTemplate = signal<Training | undefined>(undefined);
+  todayTrainingDate = signal<Date | null>(null);
 
   isLoading = signal<boolean>(true);
+
+  isStartTrainingModalOpen = false;
+  isTodayTrainingModalOpen = false;
 
   constructor(
     public currentRegistry: CurrentRegistryService,
     private trainingProgramRegistry: TrainingProgramRegistryService,
     private trainingRegistry: TrainingRegistryService,
-    private dialogs: TuiDialogService
+    private dialogs: TuiDialogService,
+    private completedRegistry: CompletedRegistryService
   ) {}
 
   async ngOnInit() {
@@ -153,30 +164,60 @@ export class HomeRouteComponent implements OnInit {
       : [];
   };
 
-  showStartTrainingModal(content: PolymorpheusContent<TuiDialogContext>) {
-    this.dialogs
-      .open(content, {
-        closeable: false,
-      })
-      .subscribe();
+  showStartTrainingModal() {
+    this.isStartTrainingModalOpen = true;
   }
 
-  openTodayTrainingModal(
-    content: PolymorpheusContent<TuiDialogContext>,
-    training?: Training
-  ) {
+  openTodayTrainingModal(training?: Training) {
+    this.isStartTrainingModalOpen = false;
+    this.isTodayTrainingModalOpen = true;
     this.trainingTemplate.set(training);
+    this.todayTrainingDate.set(new Date());
     this.todayTrainingModalTitle =
       this.trainingTemplate()?.name || 'Тренировка';
-    this.dialogs
-      .open(content, {
-        size: 'fullscreen',
-      })
-      .subscribe();
   }
 
-  onCompletedTrainingSubmit(training: Training) {
-    console.log(training);
-    console.log(this.trainingTemplate());
+  closeStartTrainingModal() {
+    this.isStartTrainingModalOpen = false;
+  }
+
+  closeTodayTrainingModal() {
+    this.isTodayTrainingModalOpen = false;
+  }
+
+  async onCompletedTrainingSubmit(training: Training) {
+    try {
+      // Создаем сущность CompletedTraining
+      const completedTraining = new CompletedTraining();
+      completedTraining.training = this.trainingTemplate()!;
+      completedTraining.date = this.todayTrainingDate()!.getTime() as any;
+      completedTraining.exercises = [];
+
+      // Преобразуем упражнения тренировки в завершенные упражнения
+      for (const exercise of training.exercises) {
+        const completedExercise = new CompletedExercise();
+        completedExercise.exercise = exercise.exercise;
+        completedExercise.sets = [];
+
+        // Преобразуем подходы упражнения в завершенные подходы
+        for (const set of exercise.sets) {
+          const completedExerciseSet = new CompletedExerciseSet();
+          completedExerciseSet.set = set.set;
+          completedExercise.sets.push(completedExerciseSet);
+        }
+
+        completedTraining.exercises.push(completedExercise);
+      }
+
+      // Сохраняем завершенную тренировку
+      await this.completedRegistry.create(completedTraining);
+
+      // Очищаем поля после успешного сохранения
+      this.trainingTemplate.set(undefined);
+      this.todayTrainingDate.set(null);
+      this.closeTodayTrainingModal();
+    } catch (error) {
+      console.error('Ошибка при сохранении завершенной тренировки:', error);
+    }
   }
 }

@@ -124,7 +124,7 @@
       class="tui-space_right-3"
       (click)="handleCancel()"
     >
-      Отмена
+      {{cancelBtnText}}
     </button>
     <button
       tuiButton
@@ -133,7 +133,7 @@
       size="m"
       [disabled]="form.invalid"
     >
-      Создать
+      {{submitBtnText}}
     </button>
   </footer>
 </form>

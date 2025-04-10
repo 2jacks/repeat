@@ -14,6 +14,13 @@ const routes: Routes = [
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'statistics',
+    loadChildren: () =>
+      import('./modules/statistics/statistics.module').then(
+        (m) => m.StatisticsModule
+      ),
+  },
+  {
     path: 'workout',
     children: [
       {
