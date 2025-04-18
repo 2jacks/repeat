@@ -1,0 +1,104 @@
+<div class="completed-trainings-container">
+  <h5 class="tui-text_h5 title">Завершенные тренировки</h5>
+  <tui-accordion [closeOthers]="false">
+    <tui-accordion-item *ngFor="let training of completedTrainings">
+      <div class="training-card">
+        <div class="training-header">
+          <h6 class="tui-text_h6">
+            {{ training.templateTraining?.name || "Тренировка" }}
+          </h6>
+          <span class="date">{{ training.date | date : "dd.MM.yyyy" }}</span>
+        </div>
+      </div>
+
+      <ng-container tuiAccordionItemContent>
+        <div class="training-info">
+          <div class="exercises">
+            <div
+              *ngFor="let exercise of training.exercises"
+              class="exercise-card flat-area"
+            >
+              <h6 class="tui-text_body-l-2">{{ exercise.exercise.name }}</h6>
+
+              <div class="exercise-sets">
+                <div *ngFor="let set of exercise.sets" class="exercise-set">
+                  <div class="set-number">{{ set.set.number }}.</div>
+
+                  <div class="reps tui-text_body-s">
+                    <span>Повторения</span>
+                    <div
+                      class="reps-value"
+                      [ngClass]="{
+                        ok:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.reps &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.reps === set.set.reps,
+                        bad:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.reps &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            !.reps > set.set.reps,
+                        good:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.reps &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            !.reps < set.set.reps,
+                      }"
+                    >
+                      <span>{{ set.set.reps }}</span>
+                      <span
+                        *ngIf="getTemplateExerciseSet(training, exercise, set)"
+                        >/{{
+                          getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.reps
+                        }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="weight tui-text_body-s">
+                    <span>Вес (кг.)</span>
+                    <div
+                      class="weight-value"
+                      [ngClass]="{
+                        ok:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.weight &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.weight === set.set.weight,
+                        bad:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.weight &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            !.weight > set.set.weight,
+                        good:
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.weight &&
+                            getTemplateExerciseSet(training, exercise, set)?.set
+                            !.weight < set.set.weight,
+                      }"
+                    >
+                      <span>{{ set.set.weight }}</span>
+                      <span
+                        *ngIf="getTemplateExerciseSet(training, exercise, set)"
+                        >/
+                        {{
+                          getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.weight
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </tui-accordion-item>
+  </tui-accordion>
+  <div *ngIf="completedTrainings.length === 0" class="no-trainings">
+    <p>У вас пока нет завершенных тренировок</p>
+  </div>
+</div>

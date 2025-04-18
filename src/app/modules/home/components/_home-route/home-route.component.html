@@ -36,7 +36,6 @@
     <div *ngIf="!currentState?.activeTrainingProgram">
       <div class="select-program">
         <tui-select
-          tuiDropdownMobile
           [(ngModel)]="trainingProgramToStart"
           [stringify]="stringifyTrainingProgram"
         >
@@ -44,7 +43,7 @@
           <tui-data-list-wrapper
             *tuiDataList
             [items]="trainingPrograms"
-            [itemContent]="stringifyTrainingProgram"
+            [itemContent]="stringifyTrainingProgram | tuiStringifyContent"
           ></tui-data-list-wrapper>
         </tui-select>
 
@@ -63,18 +62,20 @@
   <div class="calendar">
     <div
       *ngIf="!currentState?.activeTrainingProgram"
-      class="no-calendar-placeholder"
+      class="no-calendar-placeholder tui-text_body-m-2"
     >
       Выберите тренировочную программу, чтобы увидеть расписание
     </div>
 
-    <div class="calendar-wrapper">
+    <div *ngIf="currentState?.activeTrainingProgram" class="calendar-wrapper">
       <tui-calendar [markerHandler]="isTrainingDay"></tui-calendar>
     </div>
 
     <div class="today-plans">
       <div class="today-training">
-        <div *ngIf="!todayTraining()">Сегодня тренировок не запланировано</div>
+        <div *ngIf="!todayTraining()" class="tui-text_body-m-2">
+          Сегодня тренировок не запланировано
+        </div>
         <div *ngIf="todayTraining()" class="island">
           <div class="today-training-name">{{ todayTraining()?.name }}</div>
 
@@ -100,7 +101,6 @@
           </div>
         </div>
       </div>
-      <div class="today-food"></div>
     </div>
   </div>
 
@@ -153,13 +153,15 @@
   [(tuiDialog)]="isTodayTrainingModalOpen"
   [tuiDialogOptions]="{ size: 'fullscreen', closeable: false }"
 >
-  <app-training-form
-    [training]="trainingTemplate()"
-    [isNameFieldHidden]="isTodayTrainingNameFieldHidden"
-    [title]="todayTrainingModalTitle"
-    (onSubmit)="onCompletedTrainingSubmit($event)"
-    (onCancel)="closeTodayTrainingModal()"
-    [submitBtnText]="'Завершить'"
-    [cancelBtnText]="'Отменить'"
-  ></app-training-form>
+  <div class="new-training-wrapper">
+    <app-training-form
+      [training]="trainingTemplate()"
+      [isNameFieldHidden]="isTodayTrainingNameFieldHidden"
+      [title]="todayTrainingModalTitle"
+      (onSubmit)="onCompletedTrainingSubmit($event)"
+      (onCancel)="closeTodayTrainingModal()"
+      [submitBtnText]="'Завершить'"
+      [cancelBtnText]="'Отменить'"
+    ></app-training-form>
+  </div>
 </ng-template>

@@ -10,7 +10,7 @@ import { TrainingRegistryService } from '../../../training/services/training-reg
 import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { TuiDialogService } from '@taiga-ui/core';
 import { CompletedTraining } from '../../../training/entities/completed-training.entity';
-import { CompletedRegistryService } from '../../../training/services/completed-training-registry.service';
+import { CompletedTrainingRegistryService } from '../../../training/services/completed-training-registry.service';
 import { CompletedExercise } from '../../../training/entities/completed-exercise.entity';
 import { CompletedExerciseSet } from '../../../exercises/entities/completed-exercise-set.entity';
 
@@ -45,7 +45,7 @@ export class HomeRouteComponent implements OnInit {
     private trainingProgramRegistry: TrainingProgramRegistryService,
     private trainingRegistry: TrainingRegistryService,
     private dialogs: TuiDialogService,
-    private completedRegistry: CompletedRegistryService
+    private completedRegistry: CompletedTrainingRegistryService
   ) {}
 
   async ngOnInit() {
@@ -189,7 +189,7 @@ export class HomeRouteComponent implements OnInit {
     try {
       // Создаем сущность CompletedTraining
       const completedTraining = new CompletedTraining();
-      completedTraining.training = this.trainingTemplate()!;
+      completedTraining.templateTraining = this.trainingTemplate()!;
       completedTraining.date = this.todayTrainingDate()!.getTime() as any;
       completedTraining.exercises = [];
 

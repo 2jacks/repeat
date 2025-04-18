@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="program-form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
   <h5 class="tui-text_h5" *ngIf="!isEditMode">Создание тренировочного плана</h5>
   <h5 class="tui-text_h5" *ngIf="isEditMode">
     Редактирование тренировочного плана
@@ -54,44 +54,48 @@
         Добавить тренировку
       </button>
     </div>
+    <div class="trainings-list">
+      <div
+        *ngFor="let training of trainingsFormArray.controls; let i = index"
+        [formGroupName]="i"
+        class="training-item island"
+      >
+        <div class="training-item__content">
+          <div class="training-item__header">
+            <tui-select
+              formControlName="training"
+              [stringify]="stringifyTraining"
+            >
+              Тренировка
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="trainings"
+                [itemContent]="stringifyTraining | tuiStringifyContent"
+              />
+            </tui-select>
+            <button
+              tuiButton
+              type="button"
+              appearance="outline-destructive"
+              size="l"
+              iconStart="@tui.trash"
+              (click)="removeTraining(i)"
+              [disabled]="trainingsFormArray.length === 1"
+            ></button>
+          </div>
 
-    <div
-      *ngFor="let training of trainingsFormArray.controls; let i = index"
-      [formGroupName]="i"
-      class="training-item island"
-    >
-      <div class="training-item__content">
-        <div class="training-item__header">
           <tui-select
-            formControlName="training"
-            [stringify]="stringifyTraining"
+            formControlName="dayOfWeek"
+            [stringify]="stringifyWeekDay"
           >
-            Тренировка
+            День недели
             <tui-data-list-wrapper
               *tuiDataList
-              [items]="trainings"
-              [itemContent]="stringifyTraining | tuiStringifyContent"
+              [items]="weekDays"
+              [itemContent]="stringifyWeekDay | tuiStringifyContent"
             />
           </tui-select>
-          <button
-            tuiButton
-            type="button"
-            appearance="outline-destructive"
-            size="l"
-            iconStart="@tui.trash"
-            (click)="removeTraining(i)"
-            [disabled]="trainingsFormArray.length === 1"
-          ></button>
         </div>
-
-        <tui-select formControlName="dayOfWeek" [stringify]="stringifyWeekDay">
-          День недели
-          <tui-data-list-wrapper
-            *tuiDataList
-            [items]="weekDays"
-            [itemContent]="stringifyWeekDay | tuiStringifyContent"
-          />
-        </tui-select>
       </div>
     </div>
   </div>

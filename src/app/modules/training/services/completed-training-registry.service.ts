@@ -11,7 +11,7 @@ import { CompletedExerciseSet } from '../../exercises/entities/completed-exercis
 import { Set } from '../../exercises/entities/set.entity';
 
 @Injectable()
-export class CompletedRegistryService extends BaseRegistryService {
+export class CompletedTrainingRegistryService extends BaseRegistryService {
   repository: Repository<CompletedTraining>;
 
   public items: WritableSignal<CompletedTraining[]> = signal([]);
@@ -29,7 +29,14 @@ export class CompletedRegistryService extends BaseRegistryService {
     try {
       const res = await this.repository.find({
         relations: {
-          training: true,
+          templateTraining: {
+            exercises: {
+              exercise: true,
+              sets: {
+                set: true,
+              },
+            },
+          },
           exercises: {
             exercise: true,
             sets: {
@@ -56,7 +63,7 @@ export class CompletedRegistryService extends BaseRegistryService {
       const res = await this.repository.findOne({
         where: { id: id },
         relations: {
-          training: true,
+          templateTraining: true,
           exercises: true,
         },
       });
@@ -73,7 +80,7 @@ export class CompletedRegistryService extends BaseRegistryService {
     try {
       // Создаем запись о завершенной тренировке
       const newCompletedTraining = this.repository.create({
-        training: completedTraining.training,
+        templateTraining: completedTraining.templateTraining,
         date: completedTraining.date,
       });
       const savedCompletedTraining = await this.repository.save(

@@ -6,6 +6,7 @@ import { TrainingRegistryService } from '../../services/training-registry.servic
 @Component({
   selector: 'app-edit-training-route',
   templateUrl: './edit-training-route.component.html',
+  styleUrls: ['./edit-training-route.component.scss'],
   standalone: false,
 })
 export class EditTrainingRouteComponent implements OnInit {

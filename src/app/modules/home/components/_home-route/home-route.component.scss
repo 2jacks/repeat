@@ -77,11 +77,10 @@
 
       overflow-y: auto;
     }
-    &-training,
-    &-food {
+    &-training {
       border-radius: 10px;
       height: 100%;
-      width: 50%;
+      width: 100%;
 
       padding: 4px;
 
@@ -120,9 +119,6 @@
       flex-direction: column;
       gap: 8px;
     }
-    &-food {
-      background-color: var(--tui-status-info-pale-hover);
-    }
   }
 }
 
@@ -157,4 +153,9 @@
       width: 100%;
     }
   }
+}
+
+.new-training-wrapper {
+  height: 90vh;
+  width: 100%;
 }

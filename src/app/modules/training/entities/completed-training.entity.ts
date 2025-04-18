@@ -18,7 +18,7 @@ export class CompletedTraining {
 
   @OneToOne(() => Training, { nullable: true })
   @JoinColumn({ name: 'training_id' })
-  training!: Relation<Training>;
+  templateTraining?: Relation<Training>;
 
   @Column()
   date!: Date;

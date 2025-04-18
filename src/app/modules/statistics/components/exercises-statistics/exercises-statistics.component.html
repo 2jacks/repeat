@@ -1,0 +1,28 @@
+<div class="exercise-select">
+  <tui-select [(ngModel)]="selectedExercise" [stringify]="_stringifyExercise">
+    Выберите упражнение
+    <tui-data-list-wrapper
+      *tuiDataList
+      [items]="exercises"
+      [itemContent]="_stringifyExercise | tuiStringifyContent"
+    ></tui-data-list-wrapper>
+  </tui-select>
+
+  <button
+    tuiButton
+    type="button"
+    appearance="secondary"
+    iconStart="@tui.trash"
+    (click)="clearSelectedExercise()"
+  ></button>
+</div>
+
+<div class="dashboard">
+  <app-common-exercises-statistics
+    *ngIf="selectedExercise === null"
+  ></app-common-exercises-statistics>
+  <app-specific-exercise-statistics
+    *ngIf="selectedExercise !== null"
+    [exercise]="selectedExercise"
+  ></app-specific-exercise-statistics>
+</div>

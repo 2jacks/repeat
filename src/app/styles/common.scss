@@ -47,3 +47,15 @@
     margin-top: 40px;
   }
 }
+
+.ok {
+  color: var(--tui-status-info);
+}
+
+.bad {
+  color: var(--tui-status-negative);
+}
+
+.good {
+  color: var(--tui-status-positive);
+}

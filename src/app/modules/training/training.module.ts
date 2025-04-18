@@ -12,8 +12,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ExercisesModule } from '../exercises/exercises.module';
 import { TrainingFormComponent } from './components/training-form/training-form.component';
 import { EditTrainingRouteComponent } from './components/_edit-training-route/edit-training-route.component';
-import { CompletedTrainingListComponent } from './components/completed-training-list/completed-training-list.component';
-import { CompletedRegistryService } from './services/completed-training-registry.service';
+
+import { CompletedTrainingRegistryService } from './services/completed-training-registry.service';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,8 @@ import { CompletedRegistryService } from './services/completed-training-registry
     TrainingListComponent,
     TrainingFormComponent,
     EditTrainingRouteComponent,
-    CompletedTrainingListComponent,
   ],
-  exports: [TrainingFormComponent, CompletedTrainingListComponent],
+  exports: [TrainingFormComponent],
   imports: [
     TrainingRoutingModule,
 
@@ -35,6 +34,6 @@ import { CompletedRegistryService } from './services/completed-training-registry
 
     ExercisesModule,
   ],
-  providers: [TrainingRegistryService, CompletedRegistryService],
+  providers: [TrainingRegistryService, CompletedTrainingRegistryService],
 })
 export class TrainingModule {}

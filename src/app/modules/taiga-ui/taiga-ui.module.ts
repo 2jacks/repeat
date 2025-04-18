@@ -26,6 +26,7 @@ import {
   TuiInputFiles,
   TuiStringifyContentPipe,
   TuiInputNumber,
+  TuiTabs,
 } from '@taiga-ui/kit';
 import {
   TuiAppBar,
@@ -86,6 +87,7 @@ const MODULES = [
   TuiComboBoxModule,
   TuiCalendar,
   TuiDialog,
+  TuiTabs,
 ] as any[];
 
 @NgModule({
