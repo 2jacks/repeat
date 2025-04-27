@@ -12,17 +12,17 @@
     tuiButton
     type="button"
     appearance="secondary"
-    iconStart="@tui.trash"
+    iconStart="@tui.x"
     (click)="clearSelectedExercise()"
   ></button>
 </div>
 
 <div class="dashboard">
   <app-common-exercises-statistics
-    *ngIf="selectedExercise === null"
+    *ngIf="selectedExercise() === null"
   ></app-common-exercises-statistics>
   <app-specific-exercise-statistics
-    *ngIf="selectedExercise !== null"
-    [exercise]="selectedExercise"
+    *ngIf="selectedExercise() !== null"
+    [exercise]="$any(selectedExercise)"
   ></app-specific-exercise-statistics>
 </div>

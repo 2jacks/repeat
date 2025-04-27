@@ -1,4 +1,5 @@
-<div class="completed-trainings-container">
+<tui-loader *ngIf="isLoading"></tui-loader>
+<div class="completed-trainings-container" *ngIf="!isLoading">
   <h5 class="tui-text_h5 title">Завершенные тренировки</h5>
   <tui-accordion [closeOthers]="false">
     <tui-accordion-item *ngFor="let training of completedTrainings">

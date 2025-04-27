@@ -28,6 +28,11 @@ export class TrainingProgramRegistryService extends BaseRegistryService {
             training: true,
           },
         },
+        order: {
+          trainings: {
+            dayOfWeek: 'ASC',
+          },
+        },
       });
 
       this.items.set(res);

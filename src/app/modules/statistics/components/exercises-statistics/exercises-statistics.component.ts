@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Exercise } from 'src/app/modules/exercises/entities/exercise.entity';
 import { ExercisesRegistryService } from 'src/app/modules/exercises/services/exercises-registry.service';
 @Component({
@@ -6,28 +6,27 @@ import { ExercisesRegistryService } from 'src/app/modules/exercises/services/exe
   styleUrls: ['./exercises-statistics.component.scss'],
   standalone: false,
   selector: 'app-exercises-statistics',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExercisesStatisticsComponent {
   public exercises: Exercise[] = [];
 
-  public selectedExercise: Exercise | null = null;
+  public selectedExercise = signal<Exercise | null>(null);
 
   constructor(private exercisesRegistryService: ExercisesRegistryService) {}
 
   ngOnInit() {
     this.exercisesRegistryService.getAll().then((exercises) => {
       this.exercises = exercises;
-
-      this.selectedExercise = exercises[0]; // TODO: remove
     });
   }
 
   public onSelectExercise(exercise: Exercise) {
-    this.selectedExercise = exercise;
+    this.selectedExercise.set(exercise);
   }
 
   public clearSelectedExercise() {
-    this.selectedExercise = null;
+    this.selectedExercise.set(null);
   }
 
   protected _stringifyExercise(exercise: Exercise) {

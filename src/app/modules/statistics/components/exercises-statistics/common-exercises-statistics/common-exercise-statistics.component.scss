@@ -1,0 +1,24 @@
+:host {
+  padding: 4px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+
+  &-full-width {
+    grid-column: span 2;
+  }
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}

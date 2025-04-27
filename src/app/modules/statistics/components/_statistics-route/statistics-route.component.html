@@ -1,30 +1,28 @@
-<div class="statistics-container">
-  <div class="tabs">
-    <tui-tabs [(activeItemIndex)]="activeTabIndex">
-      <button
-        iconStart="@tui.land-plot"
-        tuiTab
-        type="button"
-        (click)="onClick('training')"
-      >
-        Тренировки
-      </button>
-      <button
-        iconStart="@tui.dumbbell"
-        tuiTab
-        type="button"
-        (click)="onClick('exerises')"
-      >
-        Упражнения
-      </button>
-    </tui-tabs>
-  </div>
-  <div class="tab-content">
-    <app-completed-training-list
-      *ngIf="tab === 'training'"
-    ></app-completed-training-list>
-    <app-exercises-statistics
-      *ngIf="tab === 'exerises'"
-    ></app-exercises-statistics>
-  </div>
+<div class="tabs">
+  <tui-tabs [(activeItemIndex)]="activeTabIndex">
+    <button
+      iconStart="@tui.land-plot"
+      tuiTab
+      type="button"
+      (click)="onClick('training')"
+    >
+      Тренировки
+    </button>
+    <button
+      iconStart="@tui.dumbbell"
+      tuiTab
+      type="button"
+      (click)="onClick('exerises')"
+    >
+      Упражнения
+    </button>
+  </tui-tabs>
+</div>
+<div class="tab-content">
+  <app-completed-training-list
+    *ngIf="tab === 'training'"
+  ></app-completed-training-list>
+  <app-exercises-statistics
+    *ngIf="tab === 'exerises'"
+  ></app-exercises-statistics>
 </div>

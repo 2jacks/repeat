@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CompletedTrainingRegistryService } from '../../../../training/services/completed-training-registry.service';
 import { CompletedTraining } from '../../../../training/entities/completed-training.entity';
+import { StatisticsService } from '../../../services/statistics.service';
+import { Exercise } from '../../../../exercises/entities/exercise.entity';
 
 @Component({
   selector: 'app-common-exercises-statistics',
@@ -11,19 +13,49 @@ import { CompletedTraining } from '../../../../training/entities/completed-train
 export class CommonExerciseStatisticsComponent implements OnInit {
   completedTrainings: CompletedTraining[] = [];
 
+  mostPopularExercise = signal<{
+    exercise: Exercise;
+    totalSets: number;
+  } | null>(null);
+  exerciseWithMaxWeight = signal<{
+    exercise: Exercise;
+    maxWeight: number;
+  } | null>(null);
+  exerciseWithMaxProgression = signal<{
+    exercise: Exercise;
+    progression: number;
+  } | null>(null);
+  trainingsLastMonth = signal<number>(0);
+  missedTrainings = signal<number>(0);
+
   constructor(
-    private completedTrainingService: CompletedTrainingRegistryService
+    private completedTrainingService: CompletedTrainingRegistryService,
+    private statisticsService: StatisticsService
   ) {}
 
   ngOnInit(): void {
-    this.loadCompletedTrainings();
+    this.loadStatistics();
   }
 
-  private async loadCompletedTrainings(): Promise<void> {
+  private async loadStatistics(): Promise<void> {
     try {
-      this.completedTrainings = await this.completedTrainingService.getAll();
+      // Загружаем статистику
+      const [mostPopular, maxWeight, maxProgression, lastMonth, missed] =
+        await Promise.all([
+          this.statisticsService.getMostPopularExercise(),
+          this.statisticsService.getExerciseWithMaxWeight(),
+          this.statisticsService.getExerciseWithMaxProgression(),
+          this.statisticsService.getTrainingsCountLastMonth(),
+          this.statisticsService.getMissedTrainingsCount(),
+        ]);
+
+      this.mostPopularExercise.set(mostPopular);
+      this.exerciseWithMaxWeight.set(maxWeight);
+      this.exerciseWithMaxProgression.set(maxProgression);
+      this.trainingsLastMonth.set(lastMonth);
+      this.missedTrainings.set(missed);
     } catch (error) {
-      console.error('Ошибка при загрузке завершенных тренировок:', error);
+      console.error('Ошибка при загрузке статистики:', error);
     }
   }
 }

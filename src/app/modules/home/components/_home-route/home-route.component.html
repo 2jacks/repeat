@@ -71,12 +71,12 @@
       <tui-calendar [markerHandler]="isTrainingDay"></tui-calendar>
     </div>
 
-    <div class="today-plans">
+    <div class="today-plans island">
       <div class="today-training">
         <div *ngIf="!todayTraining()" class="tui-text_body-m-2">
           Сегодня тренировок не запланировано
         </div>
-        <div *ngIf="todayTraining()" class="island">
+        <div *ngIf="todayTraining()" class="">
           <div class="today-training-name">{{ todayTraining()?.name }}</div>
 
           <div class="today-exercises">

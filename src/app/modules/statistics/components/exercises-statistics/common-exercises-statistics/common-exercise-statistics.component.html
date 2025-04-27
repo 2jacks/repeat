@@ -1,9 +1,48 @@
-<div class="common-exercise-statistics">
-  <h2>Общая статистика упражнений</h2>
-  <div class="statistics-container">
-    <!-- Здесь будет общая статистика по всем упражнениям -->
-    <div class="placeholder">
-      Общая статистика упражнений будет отображаться здесь
-    </div>
+<div class="island stat-block stat-block-full-width">
+  <div class="label">Наиболее популярное упражнение (всё время)</div>
+  <div class="value">
+    @if (mostPopularExercise()) {
+    {{ (mostPopularExercise()?.exercise)!.name }} ({{
+      mostPopularExercise()?.totalSets
+    }}
+    подходов) } @else { Нет данных }
   </div>
 </div>
+
+<div class="island stat-block stat-block-full-width">
+  <div class="label">Самый тяжелый вес (всё время)</div>
+  <div class="value">
+    @if (exerciseWithMaxWeight()) {
+    {{ (exerciseWithMaxWeight()?.exercise)!.name }} ({{
+      exerciseWithMaxWeight()?.maxWeight
+    }}
+    кг) } @else { Нет данных }
+  </div>
+</div>
+
+<div class="island stat-block stat-block-full-width">
+  <div class="label">
+    Самая большая прогрессия веса (текущий тренировочный план)
+  </div>
+  <div class="value">
+    @if (exerciseWithMaxProgression()) {
+    {{ (exerciseWithMaxProgression()?.exercise)!.name }} ({{
+      exerciseWithMaxProgression()?.progression
+    }}%) } @else { Нет данных }
+  </div>
+</div>
+
+<div class="island stat-block stat-block-full-width">
+  <div class="label">Тренировок за месяц</div>
+  <div class="value">{{ trainingsLastMonth() }}</div>
+</div>
+
+<div class="island stat-block stat-block-full-width">
+  <div class="label">Тренировок пропущено (текущий тренировочный план)</div>
+  <div class="value">{{ missedTrainings() }}</div>
+</div>
+<!-- 
+<div class="island stat-block">
+  <div class="label"></div>
+  <div class="value"></div>
+</div> -->

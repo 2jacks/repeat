@@ -8,7 +8,10 @@ import { CompletedTrainingListComponent } from './components/completed-training-
 import { ExercisesStatisticsComponent } from './components/exercises-statistics/exercises-statistics.component';
 import { CommonExerciseStatisticsComponent } from './components/exercises-statistics/common-exercises-statistics/common-exercise-statistics.component';
 import { SpecificExerciseStatisticsComponent } from './components/exercises-statistics/specific-exercise-statistics/specific-exercise-statistics.component';
-
+import { StatisticsService } from './services/statistics.service';
+import { ExercisesModule } from '../exercises/exercises.module';
+import { CurrentModule } from '../current/current.module';
+import { ChartService } from './services/chart.service';
 @NgModule({
   declarations: [
     StatisticsRouteComponent,
@@ -18,8 +21,11 @@ import { SpecificExerciseStatisticsComponent } from './components/exercises-stat
     SpecificExerciseStatisticsComponent,
   ],
   imports: [
-    CommonModule,
     StatisticsRoutingModule,
+    CurrentModule,
+    ExercisesModule,
+    CommonModule,
+
     TrainingModule,
     SharedModule,
   ],
@@ -27,5 +33,6 @@ import { SpecificExerciseStatisticsComponent } from './components/exercises-stat
     CommonExerciseStatisticsComponent,
     SpecificExerciseStatisticsComponent,
   ],
+  providers: [StatisticsService, ChartService],
 })
 export class StatisticsModule {}

@@ -1,26 +1,52 @@
-<div class="statistics-container">
-  <div class="island">
-    <span class="label">Всего подходов (текущая программа)</span>
-  </div>
+<div class="island stat-block">
+  <span class="label">
+    Всего подходов
+    <br />
+    (текущая программа)
+  </span>
+  <span class="value">{{ totalCompletedSets() }}</span>
+</div>
 
-  <div class="island stat-block">
-    <span class="label">
-      Выполнение нагрузки по весам (текущая программа)
-    </span>
-    <span class="value">100%</span>
-  </div>
+<div class="island stat-block">
+  <span class="label">
+    План по весу
+    <br />
+    (текущая программа)</span
+  >
+  <span
+    class="value"
+    [ngClass]="{
+        bad: weightLoadCompletion() < 80,
+        ok: weightLoadCompletion() >= 80,
+        good: weightLoadCompletion() >= 100,
+      }"
+    >{{ weightLoadCompletion() }}%</span
+  >
+</div>
 
-  <div class="island stat-block">
-    <span class="label">
-      Выполнение нагрузки по подходам (текущая программа)
-    </span>
-    <span class="value">100%</span>
-  </div>
+<div class="island stat-block">
+  <span class="label">
+    План по повторениям
+    <br />
+    (текущая программа)
+  </span>
+  <span
+    class="value"
+    [ngClass]="{
+        bad: repsLoadCompletion() < 80,
+        ok: repsLoadCompletion() >= 80,
+        good: repsLoadCompletion() >= 100,
+      }"
+  >
+    {{ repsLoadCompletion() }}%
+  </span>
+</div>
 
-  <div class="island">
-    <span class="label">График прогрессии весов (всё время)</span>
-  </div>
-  <div class="island">
-    <span class="label">График повторений (всё время)</span>
-  </div>
+<div class="island">
+  <span class="label">График прогрессии весов (всё время)</span>
+  <div class="value" id="weight-progression"></div>
+</div>
+<div class="island">
+  <span class="label">График повторений (всё время)</span>
+  <div class="value" id="reps-progression"></div>
 </div>

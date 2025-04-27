@@ -45,7 +45,10 @@
 
         <ng-template tuiAccordionItemContent>
           <div class="accordion-content">
-            <div *ngFor="let training of trainingProgram.trainings" class="training">
+            <div
+              *ngFor="let training of trainingProgram.trainings"
+              class="training"
+            >
               {{ training.training.name }}
               <tui-badge>{{ getWeekDayName(training.dayOfWeek) }}</tui-badge>
             </div>

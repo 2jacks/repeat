@@ -14,7 +14,10 @@ import { CompletedTrainingRegistryService } from '../../../training/services/com
 import { CompletedExercise } from '../../../training/entities/completed-exercise.entity';
 import { CompletedExerciseSet } from '../../../exercises/entities/completed-exercise-set.entity';
 
-const ONE_DOT: [string] = ['var(--tui-status-positive)'];
+const GREEN_DOT: [string] = ['var(--tui-status-positive)'];
+const BLUE_DOT: [string] = ['var(--tui-status-info)'];
+const RED_DOT: [string] = ['var(--tui-status-negative)'];
+const YELLOW_DOT: [string] = ['var(--tui-status-warning)'];
 
 @Component({
   selector: 'app-home-page',
@@ -25,6 +28,7 @@ const ONE_DOT: [string] = ['var(--tui-status-positive)'];
 export class HomeRouteComponent implements OnInit {
   currentState: Current | null = null;
   trainingPrograms: TrainingProgram[] = [];
+  completedTrainings: CompletedTraining[] = [];
 
   trainingProgramToStart: TrainingProgram | null = null;
 
@@ -52,6 +56,7 @@ export class HomeRouteComponent implements OnInit {
     await this.loadCurrentState();
     await this.loadTrainingPrograms();
     await this.getTodayTraining();
+    await this.loadCompletedTrainings();
 
     this.isLoading.set(false);
   }
@@ -62,6 +67,10 @@ export class HomeRouteComponent implements OnInit {
 
   private async loadTrainingPrograms() {
     this.trainingPrograms = await this.trainingProgramRegistry.getAll();
+  }
+
+  private async loadCompletedTrainings(): Promise<void> {
+    this.completedTrainings = await this.completedRegistry.getAll();
   }
 
   public async getTodayTraining(): Promise<void> {
@@ -130,7 +139,6 @@ export class HomeRouteComponent implements OnInit {
     }
 
     const startDate = new Date(this.currentState.trainingProgramStart);
-    // Устанавливаем начало дня (00:00:00)
     startDate.setHours(0, 0, 0, 0);
 
     const endDate = new Date(
@@ -139,15 +147,13 @@ export class HomeRouteComponent implements OnInit {
         this.currentState.activeTrainingProgram.durationWeeks
       ) || 0
     );
-    // Устанавливаем конец дня (23:59:59.999)
     endDate.setHours(23, 59, 59, 999);
 
     const currentDate = new Date(day.toLocalNativeDate());
-    // Устанавливаем полночь для корректного сравнения
     currentDate.setHours(0, 0, 0, 0);
 
     // Проверяем, что дата находится в диапазоне программы
-    if (currentDate <= startDate || currentDate >= endDate) {
+    if (currentDate < startDate || currentDate > endDate) {
       return [];
     }
 
@@ -157,11 +163,39 @@ export class HomeRouteComponent implements OnInit {
     const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
 
     // Проверяем, есть ли тренировка в этот день недели
-    return this.currentState.activeTrainingProgram.trainings.some(
+    const hasTraining = this.currentState.activeTrainingProgram.trainings.some(
       (training) => training.dayOfWeek === adjustedDayOfWeek
-    )
-      ? ONE_DOT
-      : [];
+    );
+
+    // Проверяем, есть ли завершенная тренировка в этот день
+    const hasCompletedTraining = this.completedTrainings.some((training) => {
+      const trainingDate = new Date(training.date);
+      trainingDate.setHours(0, 0, 0, 0);
+      return trainingDate.getTime() === currentDate.getTime();
+    });
+
+    // Если есть завершенная тренировка, но она не по плану
+    if (hasCompletedTraining && !hasTraining) {
+      return BLUE_DOT; // Неплановая тренировка
+    }
+
+    // Если нет тренировки по плану
+    if (!hasTraining) {
+      return [];
+    }
+
+    if (hasCompletedTraining) {
+      return GREEN_DOT; // Тренировка выполнена
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (currentDate > today) {
+      return YELLOW_DOT; // Тренировка запланирована
+    } else {
+      return RED_DOT; // Тренировка пропущена
+    }
   };
 
   showStartTrainingModal() {

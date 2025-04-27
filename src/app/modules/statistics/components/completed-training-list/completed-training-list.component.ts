@@ -15,6 +15,7 @@ import { TrainingExerciseSet } from 'src/app/modules/exercises/entities/training
 })
 export class CompletedTrainingListComponent implements OnInit {
   completedTrainings: CompletedTraining[] = [];
+  isLoading = false;
 
   constructor(
     private completedTrainingService: CompletedTrainingRegistryService
@@ -26,9 +27,13 @@ export class CompletedTrainingListComponent implements OnInit {
 
   private async loadCompletedTrainings(): Promise<void> {
     try {
+      this.isLoading = true;
+
       this.completedTrainings = await this.completedTrainingService.getAll();
     } catch (error) {
       console.error('Ошибка при загрузке завершенных тренировок:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
