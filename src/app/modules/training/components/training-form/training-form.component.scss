@@ -36,7 +36,25 @@
   margin-top: 15px;
 }
 
+.sets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.set {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .set-number {
   width: 20px;
   flex-shrink: 0;
+}
+
+.rest-field {
+  width: 100%;
 }

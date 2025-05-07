@@ -90,7 +90,8 @@ export class InitialMigration1739812301396 implements MigrationInterface {
         "id" INTEGER PRIMARY KEY AUTOINCREMENT,
         "number" INTEGER NOT NULL,
         "reps" INTEGER NOT NULL,
-        "weight" REAL NOT NULL
+        "weight" REAL,
+        "rest" INTEGER
       );
     `);
 

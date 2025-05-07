@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class StatisticsRouteComponent {
-  public activeTabIndex = 1;
-  public tab = 'exerises';
+  public activeTabIndex = 2;
+  public tab = 'user';
 
   public onClick(tab: string) {
     this.tab = tab;

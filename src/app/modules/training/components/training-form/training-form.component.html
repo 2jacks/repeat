@@ -79,7 +79,7 @@
                   "
                   [formGroupName]="i"
                 >
-                  <div class="form__row form__one-line">
+                  <div class="form__row set">
                     <div class="set-number">{{ i + 1 }}.</div>
                     <tui-textfield [style.width.px]="120">
                       <label tuiLabel>Повторы</label>
@@ -91,6 +91,7 @@
 
                       <input tuiInputNumber formControlName="weight" />
                     </tui-textfield>
+
                     <button
                       tuiButton
                       type="button"
@@ -100,6 +101,11 @@
                       [disabled]="getSets($any(exerciseForm)).length === 1"
                       (click)="removeSet($any(exerciseForm), i)"
                     ></button>
+                    <tui-textfield class="rest-field">
+                      <label tuiLabel>Отдых (сек)</label>
+
+                      <input tuiInputNumber formControlName="rest" />
+                    </tui-textfield>
                   </div>
                 </div>
               </div>

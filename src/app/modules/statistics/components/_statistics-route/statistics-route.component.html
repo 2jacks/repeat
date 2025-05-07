@@ -16,6 +16,14 @@
     >
       Упражнения
     </button>
+    <button
+      iconStart="@tui.user"
+      tuiTab
+      type="button"
+      (click)="onClick('user')"
+    >
+      Пользователь
+    </button>
   </tui-tabs>
 </div>
 <div class="tab-content">
@@ -25,4 +33,5 @@
   <app-exercises-statistics
     *ngIf="tab === 'exerises'"
   ></app-exercises-statistics>
+  <app-user-statistics *ngIf="tab === 'user'"> </app-user-statistics>
 </div>

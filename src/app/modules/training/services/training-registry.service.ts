@@ -1,3 +1,4 @@
+
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { BaseRegistryService } from '../../shared/services/base-registry-service.service';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -103,6 +104,7 @@ export class TrainingRegistryService extends BaseRegistryService {
             number: set.set.number,
             reps: set.set.reps,
             weight: set.set.weight,
+            rest: set.set.rest,
           });
           const savedSet = await this.dataSource
             .getRepository(Set)
@@ -197,6 +199,7 @@ export class TrainingRegistryService extends BaseRegistryService {
               number: set.set.number,
               reps: set.set.reps,
               weight: set.set.weight,
+              rest: set.set.rest,
             });
             const savedSet = await setRepo.save(newSet);
 
@@ -220,6 +223,7 @@ export class TrainingRegistryService extends BaseRegistryService {
               number: set.set.number,
               reps: set.set.reps,
               weight: set.set.weight,
+              rest: set.set.rest,
             });
             const savedSet = await setRepo.save(newSet);
 

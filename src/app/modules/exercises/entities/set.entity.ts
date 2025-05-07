@@ -1,12 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  Relation,
-} from 'typeorm';
-import { TrainingExerciseSet } from './training-exercise-set.entity';
-import { CompletedExerciseSet } from './completed-exercise-set.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('_set')
 export class Set {
@@ -21,4 +13,7 @@ export class Set {
 
   @Column('float')
   weight!: number;
+
+  @Column()
+  rest!: number;
 }

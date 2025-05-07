@@ -1,0 +1,109 @@
+.container {
+}
+
+.user-data,
+.weight-records,
+.new-weight,
+.daily-calories {
+  margin-bottom: 16px;
+  background: var(--tui-base-02);
+  border-radius: 8px;
+}
+
+.user-data-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .w-50 {
+    width: 48%;
+  }
+  .w-100 {
+    width: 100%;
+  }
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: var(--tui-text-01);
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--tui-text-02);
+  }
+
+  input,
+  select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--tui-base-03);
+  }
+
+  th {
+    color: var(--tui-text-02);
+    font-weight: normal;
+  }
+}
+
+.daily-calories {
+  text-align: center;
+
+  p {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--tui-primary);
+  }
+}
+
+.new-weight {
+  .form-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    tui-textfield {
+      flex: 1;
+    }
+  }
+}
+
+.lastWeight {
+  display: inline-block;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.bmi-underweight {
+  color: #ffd700; // желтый
+}
+
+.bmi-normal {
+  color: #4caf50; // зеленый
+}
+
+.bmi-overweight {
+  color: #ffd700; // желтый
+}
+
+.bmi-obese {
+  color: #f44336; // красный
+}

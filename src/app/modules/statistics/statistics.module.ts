@@ -12,6 +12,7 @@ import { StatisticsService } from './services/statistics.service';
 import { ExercisesModule } from '../exercises/exercises.module';
 import { CurrentModule } from '../current/current.module';
 import { ChartService } from './services/chart.service';
+import { UserStatisticsComponent } from './components/user-statistics/user-statistics.component';
 @NgModule({
   declarations: [
     StatisticsRouteComponent,
@@ -19,6 +20,7 @@ import { ChartService } from './services/chart.service';
     ExercisesStatisticsComponent,
     CommonExerciseStatisticsComponent,
     SpecificExerciseStatisticsComponent,
+    UserStatisticsComponent,
   ],
   imports: [
     StatisticsRoutingModule,
@@ -32,6 +34,7 @@ import { ChartService } from './services/chart.service';
   exports: [
     CommonExerciseStatisticsComponent,
     SpecificExerciseStatisticsComponent,
+    UserStatisticsComponent,
   ],
   providers: [StatisticsService, ChartService],
 })

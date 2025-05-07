@@ -6,7 +6,6 @@ import { Set } from '../../../exercises/entities/set.entity';
 import { TrainingExercise } from '../../entities/training-exercise.entity';
 import { ExercisesRegistryService } from '../../../exercises/services/exercises-registry.service';
 import { TrainingExerciseSet } from 'src/app/modules/exercises/entities/training-exercise-set.entity';
-
 @Component({
   selector: 'app-training-form',
   templateUrl: './training-form.component.html',
@@ -31,7 +30,7 @@ export class TrainingFormComponent implements OnInit {
     private exercisesRegistryService: ExercisesRegistryService
   ) {
     this.form = this.fb.group({
-      name: [''],
+      name: ['', Validators.required],
       exercises: this.fb.array([]),
     });
   }
@@ -73,7 +72,8 @@ export class TrainingFormComponent implements OnInit {
           this.fb.group({
             number: [set.set.number, Validators.required],
             reps: [set.set.reps, [Validators.required, Validators.min(1)]],
-            weight: [set.set.weight, [Validators.required, Validators.min(0)]],
+            weight: [set.set.weight, [Validators.min(0)]],
+            rest: [set.set.rest, [Validators.min(0)]],
           })
         );
       });
@@ -132,7 +132,6 @@ export class TrainingFormComponent implements OnInit {
       const formValue = this.form.value;
       const training = this.training ?? new Training();
       training.name = formValue.name;
-
       training.exercises = formValue.exercises.map((te: any) => {
         const trainingExercise = new TrainingExercise();
         trainingExercise.exercise = te.exercise;
@@ -143,7 +142,6 @@ export class TrainingFormComponent implements OnInit {
         });
         return trainingExercise;
       });
-
       this.onSubmit.emit(training);
     }
   }

@@ -86,7 +86,21 @@
                         >/
                         {{
                           getTemplateExerciseSet(training, exercise, set)?.set
-                            ?.weight
+                            ?.rest
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="rest tui-text_body-s">
+                    <span>Отдых (сек.)</span>
+                    <div class="rest-value">
+                      <span>{{ set.set.rest }}</span>
+                      <span
+                        *ngIf="getTemplateExerciseSet(training, exercise, set)"
+                        >/
+                        {{
+                          getTemplateExerciseSet(training, exercise, set)?.set
+                            ?.rest
                         }}
                       </span>
                     </div>

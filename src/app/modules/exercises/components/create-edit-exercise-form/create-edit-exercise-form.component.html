@@ -29,7 +29,7 @@
   <tui-textarea formControlName="description">Описание</tui-textarea>
 
   <footer>
-    <button tuiButton type="submit">
+    <button tuiButton type="submit" [disabled]="exerciseForm.invalid">
       {{ confirmButtonText() }}
     </button>
     <button appearance="flat" tuiButton type="button" (click)="onCancel()">

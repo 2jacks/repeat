@@ -46,6 +46,14 @@ export class CompletedTrainingRegistryService extends BaseRegistryService {
         },
         order: {
           date: 'DESC',
+
+          exercises: {
+            sets: {
+              set: {
+                number: 'ASC',
+              },
+            },
+          },
         },
       });
 
@@ -107,6 +115,7 @@ export class CompletedTrainingRegistryService extends BaseRegistryService {
             number: set.set.number,
             reps: set.set.reps,
             weight: set.set.weight,
+            rest: set.set.rest,
           });
           const savedSet = await this.dataSource
             .getRepository(Set)
