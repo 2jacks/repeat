@@ -5,6 +5,7 @@ interface UserData {
   height: number;
   gender: FormControl<string | null>;
   activityLevel: FormControl<string | null>;
+  age: number;
 }
 
 interface WeightRecord {
@@ -36,6 +37,7 @@ export class UserStatisticsComponent implements OnInit {
     height: 175,
     gender: new FormControl<string>('Мужской'),
     activityLevel: new FormControl<string>('Низкий (сидячий образ жизни)'),
+    age: 30,
   };
 
   public weightRecords: WeightRecord[] = [];
@@ -115,23 +117,21 @@ export class UserStatisticsComponent implements OnInit {
     if (this.weightRecords.length === 0) return;
 
     const lastWeight = this.weightRecords[this.weightRecords.length - 1].weight;
-    const heightInMeters = this.userData.height / 100;
-    const age = 30; // Предполагаемый возраст, можно добавить в UserData
 
     // Формула Харриса-Бенедикта
     let bmr: number;
-    if (this.userData.gender.value === 'male') {
+    if (this.userData.gender.value === 'Мужской') {
       bmr =
         88.362 +
         13.397 * lastWeight +
         4.799 * this.userData.height -
-        5.677 * age;
+        5.677 * this.userData.age;
     } else {
       bmr =
         447.593 +
         9.247 * lastWeight +
         3.098 * this.userData.height -
-        4.33 * age;
+        4.33 * this.userData.age;
     }
 
     this.dailyCalories = Math.round(

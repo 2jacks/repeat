@@ -16,8 +16,15 @@
           <input tuiTextfield [(ngModel)]="userData.height" />
         </tui-textfield>
       </div>
+      <div class="form-group w-50">
+        <tui-textfield>
+          <label tuiLabel>Возраст</label>
 
-      <div class="form-group w-100">
+          <input tuiTextfield [(ngModel)]="userData.age" />
+        </tui-textfield>
+      </div>
+
+      <div class="form-group w-50">
         <tui-select [formControl]="userData.activityLevel">
           <label tuiLabel>Уровень активности</label>
 
